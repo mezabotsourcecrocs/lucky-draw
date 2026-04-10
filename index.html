@@ -1,0 +1,3125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Draw — St. Patrick's Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* St. Patrick's Day Color Palette */
+  --green-dark:  #1B5E20;
+  --green:       #2E7D32;
+  --green-mid:   #43A047;
+  --green-lt:    #81C784;
+  --gold:        #FFD700;
+  --gold-lt:     #FFEB3B;
+  --cream:       #F9FBE7;
+  --cream-dk:    #F1F8E9;
+  --surface:     #FFFFFF;
+  --surface2:    #F1F8E9;
+  --text:        #1B2A22;
+  --text-mid:    #4A6358;
+  --text-lt:     #8AAA97;
+  --border:      rgba(46,125,50,0.15);
+  --shadow:      rgba(46,125,50,0.1);
+  --rainbow-1: #FF0000; --rainbow-2: #FF7F00; --rainbow-3: #FFFF00; --rainbow-4: #00FF00; --rainbow-5: #0000FF; --rainbow-6: #4B0082; --rainbow-7: #9400D3;
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(46,125,50,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(255,215,0,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(129,199,132,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232E7D32' fill-opacity='1'%3E%3Cpath d='M30 5c-2 0-4 2-4 4v4c0 2 2 4 4 4s4-2 4-4V9c0-2-2-4-4-4zm0 26c-2 0-4 2-4 4v4c0 2 2 4 4 4s4-2 4-4v-4c0-2-2-4-4-4zM10 25c0-2-2-4-4-4H2c-2 0-4 2-4 4s2 4 4 4h4c2 0 4-2 4-4zm44 0c0-2-2-4-4-4h-4c-2 0-4 2-4 4s2 4 4 4h4c2 0 4-2 4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Clover Decoration */
+.clover-bg {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 5rem;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(15deg);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+  animation: fadeDown 0.8s ease both;
+}
+
+.header-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--green-mid);
+  margin-bottom: 16px;
+}
+
+.header-eyebrow::before,
+.header-eyebrow::after {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--green-mid);
+  opacity: 0.5;
+}
+
+.crescent {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 8px;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 900;
+  color: var(--green-dark);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+h1 span {
+  color: var(--gold);
+  text-shadow: 0 2px 5px rgba(255,215,0,0.3);
+}
+
+.header-sub {
+  font-size: 15px;
+  color: var(--text-mid);
+  font-weight: 400;
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
+
+.header-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto 0;
+}
+
+.conn-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 100px;
+  margin-bottom: 40px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s;
+}
+.conn-bar.loading { background: rgba(255,215,0,0.1); color: #B8860B; border: 1px solid rgba(255,215,0,0.3); }
+.conn-bar.ok      { background: rgba(46,125,50,0.08); color: var(--green-dark); border: 1px solid rgba(46,125,50,0.2); }
+.conn-bar.error   { background: rgba(200,50,50,0.08); color: #C03030; border: 1px solid rgba(200,50,50,0.2); }
+.conn-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.code-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 24px var(--shadow);
+  animation: fadeUp 0.8s 0.2s ease both;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.code-panel::before {
+  content: '🍀';
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  font-size: 5rem;
+  opacity: 0.05;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+.code-panel-title {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green-dark);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.code-panel-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.code-input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.code-input {
+  flex: 1;
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-family: 'DM Sans', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--text);
+  text-transform: uppercase;
+  outline: none;
+  transition: all 0.2s;
+}
+.code-input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,50,0.08); }
+.code-input.valid { border-color: var(--green-mid); background: rgba(46,125,50,0.04); }
+.code-input.invalid { border-color: #C03030; background: rgba(200,50,50,0.04); }
+
+.unlock-btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  color: white;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.unlock-btn:hover:not(:disabled) { background: linear-gradient(135deg, var(--green), var(--green-mid)); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(46,125,50,0.3); }
+.unlock-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.code-feedback { font-size: 12px; font-weight: 500; min-height: 18px; transition: all 0.2s; }
+.code-feedback.ok  { color: var(--green-mid); }
+.code-feedback.err { color: #C03030; }
+.code-feedback.loading { color: var(--gold); }
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 12px;
+  transition: all 0.3s;
+}
+.status-pill.locked   { background: rgba(200,50,50,0.08); color: #C03030; border: 1px solid rgba(200,50,50,0.15); }
+.status-pill.unlocked { background: rgba(46,125,50,0.08); color: var(--green-dark); border: 1px solid rgba(46,125,50,0.2); }
+.status-dot2 { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.game-section {
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+
+.game-title {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.game-title h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  letter-spacing: 0.05em;
+}
+
+.game-title p {
+  font-size: 13px;
+  color: var(--text-lt);
+  margin-top: 6px;
+}
+
+.boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.box {
+  aspect-ratio: 1;
+  position: relative;
+  cursor: not-allowed;
+  perspective: 800px;
+}
+
+.box.active { cursor: pointer; }
+.box.active:hover .box-inner { transform: scale(1.03); box-shadow: 0 8px 32px rgba(46,125,50,0.15); }
+.box.active:hover .box-lid { transform: translateY(-4px) rotateX(-8deg); }
+
+.box-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  box-shadow: 0 4px 16px var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.box-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(46,125,50,0.03) 0%, transparent 60%);
+}
+
+.box-lid {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, var(--green) 0%, var(--green-mid) 100%);
+  border-radius: 14px 14px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 2;
+}
+
+.box-lid-icon {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.box-body {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 62%;
+  background: linear-gradient(180deg, var(--green-mid) 0%, var(--green) 100%);
+  border-radius: 0 0 14px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.box-ribbon-h {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 8px;
+  background: var(--gold);
+  transform: translateY(-50%);
+  z-index: 3;
+}
+
+.box-ribbon-v {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 8px;
+  background: var(--gold);
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.box-num {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.6);
+  z-index: 4;
+}
+
+.box.opened .box-inner {
+  cursor: default;
+  border-color: rgba(46,125,50,0.2);
+  background: var(--surface2);
+}
+
+.box-result {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.box-result-emoji { font-size: 2rem; }
+.box-result-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green-dark);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+.box-result-label.lose { color: var(--text-lt); }
+
+.box.opened .box-lid,
+.box.opened .box-body,
+.box.opened .box-ribbon-h,
+.box.opened .box-ribbon-v { display: none; }
+.box.opened .box-result { display: flex; }
+.box.opened:hover .box-inner { transform: none; box-shadow: 0 4px 16px var(--shadow); }
+
+@keyframes boxOpen {
+  0% { transform: scale(0.8) rotateY(-20deg); opacity: 0; }
+  60% { transform: scale(1.05) rotateY(5deg); }
+  100% { transform: scale(1) rotateY(0); opacity: 1; }
+}
+
+.box.opened .box-inner { animation: boxOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(27,42,34,0.7);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border-radius: 28px;
+  padding: 48px 40px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 64px rgba(27,42,34,0.2);
+}
+
+.modal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green), var(--gold), var(--green));
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.7) translateY(30px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-ornament {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 16px;
+  animation: bounceIn 0.6s 0.2s ease both;
+}
+@keyframes bounceIn { 0%{transform:scale(0)} 60%{transform:scale(1.2)} 100%{transform:scale(1)} }
+
+.modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.modal-prize {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--green-dark);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.modal-prize.lose {
+  font-size: 1.4rem;
+  color: var(--text-lt);
+}
+
+.modal-sub {
+  font-size: 12px;
+  color: var(--text-lt);
+  margin-bottom: 28px;
+  font-family: monospace;
+  letter-spacing: 0.08em;
+}
+
+.modal-voucher {
+  background: linear-gradient(135deg, #1B2A22 0%, var(--green-dark) 100%);
+  border-radius: 16px;
+  padding: 0;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255,215,0,0.3);
+  box-shadow: 0 8px 24px rgba(27,42,34,0.2);
+  display: none;
+}
+
+.voucher-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px dashed rgba(255,215,0,0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.voucher-logo-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--gold), #B8860B);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+
+.voucher-brand { text-align: left; }
+.voucher-brand-name { font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold); letter-spacing: 0.08em; }
+.voucher-brand-sub  { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; text-transform: uppercase; }
+
+.voucher-body { padding: 12px 20px; text-align: left; }
+.voucher-prize-lbl { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 3px; }
+.voucher-prize-val { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-lt); font-weight: 700; }
+
+.voucher-dots { display: flex; justify-content: center; gap: 4px; padding: 6px 0; }
+.voucher-dots span { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,215,0,0.2); }
+
+.voucher-footer { padding: 10px 20px 14px; display: flex; justify-content: space-between; }
+.voucher-info-lbl { font-size: 9px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
+.voucher-info-val { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.75); font-family: monospace; letter-spacing: 0.08em; }
+.voucher-exp-val { color: #FFB74D; }
+
+.nama-section { margin-bottom: 16px; text-align: left; }
+.nama-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 8px; display: block; }
+.nama-row { display: flex; gap: 8px; }
+.nama-input {
+  flex: 1; background: var(--cream); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 11px 14px; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500; color: var(--text); outline: none; transition: all 0.2s;
+}
+.nama-input:focus { border-color: var(--green-mid); }
+.nama-save-btn {
+  padding: 11px 16px; border: none; border-radius: 10px;
+  background: var(--green); color: white; font-family: 'Cinzel', serif;
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.nama-save-btn:hover { background: var(--green-mid); }
+.nama-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.nama-saved { font-size: 11px; color: var(--green-mid); font-weight: 600; margin-top: 6px; display: none; }
+
+.wa-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px; border-radius: 12px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white; font-family: 'Cinzel', serif; font-size: 13px;
+  font-weight: 600; letter-spacing: 0.05em; text-decoration: none;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.3); margin-bottom: 10px;
+  transition: all 0.2s;
+}
+.wa-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+
+.modal-close-btn {
+  padding: 12px 32px; border: 1.5px solid var(--border); border-radius: 12px;
+  background: transparent; color: var(--text-mid); font-family: 'Cinzel', serif;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.08em; cursor: pointer;
+  transition: all 0.2s; text-transform: uppercase;
+}
+.modal-close-btn:hover { background: var(--cream); border-color: var(--green-mid); color: var(--green-dark); }
+
+.snk-overlay {
+  display: flex; position: fixed; inset: 0;
+  background: rgba(27,42,34,0.92); z-index: 999;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(10px); padding: 20px;
+}
+
+.snk-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 24px; width: 100%; max-width: 480px;
+  max-height: 90vh; display: flex; flex-direction: column;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(27,42,34,0.3);
+}
+
+.snk-header { padding: 28px 28px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; text-align: center; }
+.snk-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.snk-title { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--green-dark); }
+.snk-sub { font-size: 12px; color: var(--text-lt); margin-top: 4px; }
+
+.snk-body { padding: 20px 24px; overflow-y: auto; flex: 1; max-height: 300px; font-size: 13px; line-height: 1.8; color: var(--text-mid); }
+.snk-body h3 { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-dark); margin: 16px 0 8px; }
+.snk-body h3:first-child { margin-top: 0; }
+.snk-body ol { padding-left: 18px; }
+.snk-body ol li { margin-bottom: 5px; color: var(--text-mid); }
+
+.snk-hint { position: sticky; bottom: 0; background: linear-gradient(to top, var(--surface), transparent); height: 32px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px; }
+.snk-hint span { font-size: 11px; color: var(--green-mid); font-weight: 600; animation: bounce-hint 1.5s ease-in-out infinite; }
+@keyframes bounce-hint { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+
+.snk-footer { padding: 16px 24px 24px; border-top: 1px solid var(--border); flex-shrink: 0; }
+.snk-check { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; cursor: pointer; user-select: none; }
+.snk-checkbox { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); background: var(--cream); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.snk-checkbox.checked { background: var(--green-dark); border-color: transparent; }
+.snk-checkbox svg { display: none; }
+.snk-checkbox.checked svg { display: block; }
+.snk-check-lbl { font-size: 13px; font-weight: 500; color: var(--text); }
+.snk-start { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--green-dark), var(--green)); color: white; font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; }
+.snk-start:hover:not(:disabled) { background: linear-gradient(135deg, var(--green), var(--green-mid)); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(46,125,50,0.3); }
+.snk-start:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+.checking-overlay {
+  display: flex; position: fixed; inset: 0;
+  background: var(--cream); z-index: 1000;
+  align-items: center; justify-content: center;
+}
+
+.checking-box { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.checking-logo { font-size: 3.5rem; animation: float 2s ease-in-out infinite; }
+.checking-brand { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900; color: var(--green-dark); letter-spacing: 0.05em; }
+.checking-status { font-size: 12px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-lt); }
+.checking-status.ok    { color: var(--green-mid); }
+.checking-status.error { color: #C03030; }
+.checking-bar-wrap { width: 180px; height: 3px; background: rgba(46,125,50,0.1); border-radius: 3px; overflow: hidden; }
+.checking-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--green), var(--gold)); border-radius: 3px; transition: width 3s linear; }
+.checking-retry { padding: 10px 24px; border: 1.5px solid var(--border); border-radius: 10px; background: transparent; color: var(--text-mid); font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; cursor: pointer; display: none; transition: all 0.2s; }
+.checking-retry:hover { border-color: var(--green-mid); color: var(--green-dark); }
+
+.expired-overlay { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 2000; align-items: center; justify-content: center; }
+.expired-overlay.show { display: flex; }
+.expired-box { text-align: center; padding: 40px 20px; }
+.expired-icon { font-size: 4rem; margin-bottom: 16px; }
+.expired-title { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 900; color: var(--green-dark); margin-bottom: 12px; }
+.expired-sub { font-size: 14px; color: var(--text-mid); line-height: 1.7; max-width: 320px; margin: 0 auto; }
+
+.prizes-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 36px;
+  animation: fadeUp 0.8s 0.6s ease both;
+}
+
+.prize-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 100px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-mid);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.countdown-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-lt);
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.cd-unit { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.cd-num { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: var(--green-dark); min-width: 30px; text-align: center; }
+.cd-lbl { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lt); }
+.cd-sep { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin-bottom: 8px; }
+
+.used-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.used-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lt); margin-bottom: 8px; }
+.used-chips { display: flex; flex-wrap: wrap; gap: 6px; max-height: 80px; overflow-y: auto; }
+.used-chip { font-size: 10px; font-family: monospace; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(200,50,50,0.06); color: #C03030; border: 1px solid rgba(200,50,50,0.15); text-decoration: line-through; }
+
+.watermark { position: fixed; inset: 0; pointer-events: none; z-index: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.watermark-text { font-family: 'Cinzel', serif; font-size: clamp(3rem,10vw,7rem); color: rgba(46,125,50,0.03); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; transform: rotate(-30deg); user-select: none; }
+
+#confetti { position: fixed; inset: 0; pointer-events: none; z-index: 99; }
+
+.audio-btn { position: fixed; bottom: 16px; left: 16px; z-index: 60; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--green-mid); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px var(--shadow); transition: all 0.2s; }
+.audio-btn:hover { border-color: var(--green-mid); }
+
+/* Rainbow Divider */
+.rainbow-divider {
+  height: 4px;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  margin: 16px 0;
+  border-radius: 2px;
+}
+
+/* ─── LIVE WINNER FEED ──────────────────────────────────── */
+.winner-feed {
+  position: fixed;
+  bottom: 60px;
+  left: 16px;
+  z-index: 80;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  pointer-events: none;
+  max-width: 280px;
+}
+.winner-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 20px rgba(27,42,34,0.15);
+  animation: toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  pointer-events: auto;
+}
+.winner-toast.fade-out {
+  animation: toastOut 0.4s ease forwards;
+}
+@keyframes toastIn {
+  from { opacity:0; transform: translateX(-30px) scale(0.9); }
+  to   { opacity:1; transform: translateX(0) scale(1); }
+}
+@keyframes toastOut {
+  from { opacity:1; transform: translateX(0) scale(1); }
+  to   { opacity:0; transform: translateX(-20px) scale(0.9); }
+}
+.winner-toast-icon { font-size: 1.4rem; flex-shrink: 0; }
+.winner-toast-body { flex: 1; min-width: 0; }
+.winner-toast-name { font-size: 12px; font-weight: 700; color: var(--green-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.winner-toast-prize { font-size: 11px; color: var(--text-mid); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.winner-toast-time { font-size: 10px; color: var(--text-lt); flex-shrink: 0; }
+
+/* ─── SCRATCH CARD ──────────────────────────────────────── */
+.scratch-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: crosshair;
+}
+.scratch-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  text-align: center;
+  background: var(--surface2);
+  z-index: 1;
+}
+.scratch-reveal-emoji { font-size: 2rem; }
+.scratch-reveal-label { font-size: 11px; font-weight: 600; color: var(--green-dark); line-height: 1.3; }
+.scratch-reveal-label.lose { color: var(--text-lt); }
+.scratch-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 14px;
+  touch-action: none;
+}
+.scratch-hint {
+  position: absolute;
+  bottom: 8px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.8);
+  z-index: 3;
+  pointer-events: none;
+  text-transform: uppercase;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ─── LEADERBOARD ───────────────────────────────────────── */
+.leaderboard-section {
+  margin-top: 40px;
+  animation: fadeUp 0.8s 0.7s ease both;
+}
+.leaderboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.leaderboard-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.leaderboard-refresh {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--green-mid);
+  background: rgba(46,125,50,0.08);
+  border: 1px solid rgba(46,125,50,0.2);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.leaderboard-refresh:hover { background: rgba(46,125,50,0.15); }
+.leaderboard-refresh.spinning { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px var(--shadow);
+  animation: fadeUp 0.4s ease both;
+}
+.leaderboard-item:nth-child(1) { border-color: rgba(255,215,0,0.4); background: linear-gradient(135deg, #fffdf0, var(--surface)); }
+.leaderboard-item:nth-child(2) { border-color: rgba(192,192,192,0.4); }
+.leaderboard-item:nth-child(3) { border-color: rgba(205,127,50,0.4); }
+.leaderboard-rank {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  min-width: 28px;
+  text-align: center;
+}
+.leaderboard-item:nth-child(1) .leaderboard-rank { color: #DAA520; }
+.leaderboard-item:nth-child(2) .leaderboard-rank { color: #888; }
+.leaderboard-item:nth-child(3) .leaderboard-rank { color: #b87333; }
+.leaderboard-info { flex: 1; min-width: 0; }
+.leaderboard-name { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.leaderboard-date { font-size: 10px; color: var(--text-lt); margin-top: 2px; }
+.leaderboard-prize {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(46,125,50,0.08);
+  color: var(--green-dark);
+  border: 1px solid rgba(46,125,50,0.15);
+  white-space: nowrap;
+}
+.leaderboard-empty {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-lt);
+  font-size: 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.leaderboard-empty-icon { font-size: 2rem; margin-bottom: 8px; }
+
+
+
+@media (max-width: 480px) {
+  .boxes-grid { gap: 10px; }
+  .modal { padding: 36px 24px; }
+}
+
+  /* ── ADMIN HIDDEN TRIGGER ──────────────────────── */
+  .admin-trigger { position: fixed; bottom: 0; right: 0; width: 52px; height: 52px; z-index: 60; cursor: default; -webkit-tap-highlight-color: transparent; }
+
+  /* ── ADMIN LOGIN MODAL ─────────────────────────── */
+  .admin-login-overlay { display: none; position: fixed; inset: 0; background: rgba(27,42,34,0.9); z-index: 500; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+  .admin-login-overlay.show { display: flex; }
+  .admin-login-box { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 40px 36px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 24px 64px rgba(27,42,34,0.3); animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+  .admin-login-icon  { font-size: 2.5rem; margin-bottom: 12px; }
+  .admin-login-title { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; color: var(--green-dark); margin-bottom: 6px; }
+  .admin-login-sub   { font-size: 12px; color: var(--text-lt); margin-bottom: 24px; }
+  .admin-pw-input { width: 100%; background: var(--cream); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text); outline: none; text-align: center; letter-spacing: 0.15em; transition: all 0.2s; margin-bottom: 10px; }
+  .admin-pw-input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,50,0.08); }
+  .admin-pw-input.wrong { border-color: #C03030; animation: shake-input 0.3s ease; }
+  @keyframes shake-input { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .admin-pw-err { font-size: 12px; color: #C03030; min-height: 16px; margin-bottom: 12px; }
+  .admin-pw-row { display: flex; gap: 8px; }
+  .admin-pw-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-family: 'Cinzel', serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .admin-pw-btn.confirm { background: var(--green); color: white; }
+  .admin-pw-btn.confirm:hover { background: var(--green-mid); }
+  .admin-pw-btn.cancel  { background: var(--cream); color: var(--text-mid); border: 1px solid var(--border); }
+  .admin-pw-btn.cancel:hover { border-color: var(--green-mid); color: var(--green-dark); }
+
+  /* ── IMPROVED BOXES ─────────────────────────────── */
+  .box.active { cursor: pointer; }
+  .box.active .box-inner:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 32px rgba(46,125,50,0.2); }
+  .box.active .box-inner:hover .box-lid { transform: translateY(-6px) rotateX(-12deg); }
+
+  /* ── SESSION BADGE ──────────────────────────────── */
+  .session-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: rgba(200,50,50,0.08); color: #C03030; border: 1px solid rgba(200,50,50,0.15); margin-top: 4px; }
+
+/* ─── ADMIN PANEL STYLES ────────────────────────────────────────── */
+.admin-panel {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease;
+}
+ 
+.admin-panel.show {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+ 
+.admin-content {
+  background: var(--surface);
+  border-radius: 20px;
+  max-width: 1000px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+ 
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+ 
+.admin-header h2 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+ 
+.admin-close {
+  padding: 10px 20px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+ 
+.admin-close:hover {
+  background: var(--green-mid);
+  transform: translateY(-1px);
+}
+ 
+.admin-body {
+  padding: 28px;
+}
+ 
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+ 
+.admin-stat {
+  background: var(--cream);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid var(--gold);
+  text-align: center;
+}
+ 
+.admin-stat-value {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--green-dark);
+}
+ 
+.admin-stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-lt);
+  text-transform: uppercase;
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+}
+ 
+.admin-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+ 
+.admin-tab-btn {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-lt);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+ 
+.admin-tab-btn:hover {
+  color: var(--text-mid);
+}
+ 
+.admin-tab-btn.active {
+  color: var(--green-dark);
+  border-bottom-color: var(--gold);
+}
+ 
+.admin-tab-content {
+  display: none;
+}
+ 
+.admin-tab-content.active {
+  display: block;
+}
+ 
+.admin-form-group {
+  margin-bottom: 16px;
+}
+ 
+.admin-form-group label {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+}
+ 
+.admin-form-group input,
+.admin-form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: all 0.2s;
+}
+ 
+.admin-form-group input:focus,
+.admin-form-group textarea:focus {
+  border-color: var(--green-mid);
+  background: var(--surface2);
+}
+ 
+.admin-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: 'Courier New', monospace;
+}
+ 
+.admin-btn-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+ 
+.admin-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+ 
+.admin-btn-primary {
+  background: var(--green);
+  color: white;
+}
+ 
+.admin-btn-primary:hover {
+  background: var(--green-mid);
+  transform: translateY(-1px);
+}
+ 
+.admin-btn-secondary {
+  background: var(--gold-lt);
+  color: var(--text);
+}
+ 
+.admin-btn-secondary:hover {
+  background: var(--gold);
+}
+ 
+.admin-btn-danger {
+  background: #C03030;
+  color: white;
+}
+ 
+.admin-btn-danger:hover {
+  background: #A01010;
+}
+ 
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 13px;
+}
+ 
+.admin-table thead {
+  background: var(--surface2);
+}
+ 
+.admin-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-lt);
+  letter-spacing: 0.05em;
+}
+ 
+.admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+ 
+.admin-table tbody tr:hover {
+  background: var(--cream);
+}
+ 
+.admin-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+ 
+.admin-badge-available {
+  background: rgba(46,125,50,0.2);
+  color: var(--green-dark);
+}
+ 
+.admin-badge-used {
+  background: rgba(192,48,48,0.2);
+  color: #C03030;
+}
+ 
+.admin-btn-small {
+  padding: 6px 12px;
+  font-size: 11px;
+  background: #C03030;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+ 
+.admin-btn-small:hover {
+  background: #A01010;
+}
+ 
+.admin-alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-left: 4px solid;
+  font-size: 13px;
+  animation: slideIn 0.3s ease;
+}
+ 
+.admin-alert-success {
+  background: rgba(46,125,50,0.1);
+  border-left-color: var(--green-dark);
+  color: var(--green-dark);
+}
+ 
+.admin-alert-error {
+  background: rgba(192,48,48,0.1);
+  border-left-color: #C03030;
+  color: #C03030;
+}
+ 
+.admin-search {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  margin-bottom: 16px;
+  outline: none;
+  transition: all 0.2s;
+}
+ 
+.admin-search:focus {
+  border-color: var(--green-mid);
+  background: var(--surface2);
+}
+ 
+.admin-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-lt);
+}
+ 
+.admin-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+ 
+@media (max-width: 768px) {
+  .admin-content {
+    width: 95%;
+    max-height: 95vh;
+  }
+ 
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+ 
+  .admin-close {
+    align-self: flex-end;
+  }
+ 
+  .admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+ 
+  .admin-table {
+    font-size: 12px;
+  }
+ 
+  .admin-table th,
+  .admin-table td {
+    padding: 8px 12px;
+  }
+}
+
+/* ─── CHART TAB ──────────────────────────────────────────── */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 8px;
+}
+@media(max-width:600px){ .chart-grid { grid-template-columns: 1fr; } }
+
+.chart-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 16px 14px;
+}
+.chart-card-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-bar-wrap { display: flex; flex-direction: column; gap: 10px; }
+.chart-bar-row { display: flex; flex-direction: column; gap: 4px; }
+.chart-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-mid); font-weight: 500; }
+.chart-bar-track { height: 8px; background: rgba(46,125,50,0.1); border-radius: 4px; overflow: hidden; }
+.chart-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--green-dark), var(--green-mid)); transition: width 0.8s cubic-bezier(0.34,1.56,0.64,1); }
+.chart-bar-fill.gold { background: linear-gradient(90deg, #B8860B, var(--gold)); }
+.chart-bar-fill.red  { background: linear-gradient(90deg, #C03030, #E57373); }
+
+.chart-donut-wrap { position: relative; width: 120px; height: 120px; margin: 0 auto 12px; }
+.chart-donut-wrap svg { transform: rotate(-90deg); }
+.chart-donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.chart-donut-pct { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 900; color: var(--green-dark); }
+.chart-donut-lbl { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lt); }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 8px; }
+.chart-legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-mid); }
+.chart-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+.chart-stat-row { display: flex; justify-content: space-around; gap: 8px; }
+.chart-stat { text-align: center; }
+.chart-stat-val { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 900; color: var(--green-dark); }
+.chart-stat-lbl { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lt); margin-top: 2px; }
+
+/* ─── FINGERPRINT BADGE ──────────────────────────────────── */
+.fp-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+  padding: 4px 10px; border-radius: 100px; margin-top: 6px;
+  background: rgba(46,125,50,0.06); color: var(--text-lt);
+  border: 1px solid var(--border);
+}
+.fp-badge.blocked { background: rgba(192,48,48,0.08); color: #C03030; border-color: rgba(192,48,48,0.2); }
+.fp-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+<div class="clover-bg">☘️☘️☘️</div>
+<div class="watermark"><div class="watermark-text">source.crocs</div></div>
+<canvas id="confetti"></canvas>
+
+<!-- ADMIN HIDDEN TRIGGER -->
+<div class="admin-trigger" id="adminTrigger"></div>
+
+<!-- ADMIN LOGIN -->
+<div class="admin-login-overlay" id="adminLoginOverlay">
+  <div class="admin-login-box">
+    <div class="admin-login-icon">🔐</div>
+    <div class="admin-login-title">Admin Access</div>
+    <div class="admin-login-sub">Masukkan password admin</div>
+    <input class="admin-pw-input" id="adminPwInput" type="password" placeholder="••••••••"/>
+    <div class="admin-pw-err" id="adminPwErr"></div>
+    <div class="admin-pw-row">
+      <button class="admin-pw-btn confirm" onclick="submitAdminLogin()">Masuk</button>
+      <button class="admin-pw-btn cancel" onclick="closeAdminLogin()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<button class="audio-btn" id="audioBtn" onclick="toggleMute()">🔊</button>
+
+<!-- CHECKING OVERLAY -->
+<div class="checking-overlay" id="checkingOverlay">
+  <div class="checking-box">
+    <div class="checking-logo">🍀🌈</div>
+    <div class="checking-brand">Lucky Draw</div>
+    <div class="checking-bar-wrap"><div class="checking-bar" id="checkingBar"></div></div>
+    <div class="checking-status" id="checkingStatus">⏳ Checking server...</div>
+    <button class="checking-retry" id="checkingRetry" onclick="retryChecking()">↺ Coba Lagi</button>
+  </div>
+</div>
+
+<!-- S&K OVERLAY -->
+<div class="snk-overlay" id="snkOverlay" style="display:none;">
+  <div class="snk-box">
+    <div class="snk-header">
+      <div class="snk-icon">🍀📋</div>
+      <div class="snk-title">Syarat & Ketentuan</div>
+      <div class="snk-sub">Baca hingga selesai untuk melanjutkan</div>
+    </div>
+    <div class="snk-body" id="snkBody">
+      <h3>1. Ketentuan Umum</h3>
+      <p>Program Lucky Draw St. Patrick's Day ini diselenggarakan oleh Source Crocs sebagai bentuk apresiasi kepada pelanggan setia kami. Dengan berpartisipasi, kamu dianggap telah menyetujui seluruh syarat dan ketentuan berikut.</p>
+      <h3>2. Syarat Peserta</h3>
+      <ol>
+        <li>Peserta wajib memiliki kode unik 8 digit angka yang valid.</li>
+        <li>Setiap kode hanya dapat digunakan satu kali.</li>
+        <li>Kode tidak dapat dipindahtangankan.</li>
+        <li>Peserta wajib memiliki akun WhatsApp aktif untuk klaim hadiah.</li>
+      </ol>
+      <h3>3. Mekanisme Permainan</h3>
+      <ol>
+        <li>Masukkan kode unik 8 digit, lalu klik Buka Akses.</li>
+        <li>Pilih salah satu kotak misteri dari 9 kotak yang tersedia.</li>
+        <li>Setiap peserta hanya mendapat 1 kali kesempatan memilih kotak.</li>
+        <li>Hasil bersifat acak dan tidak dapat diulang.</li>
+      </ol>
+      <h3>4. Klaim Hadiah</h3>
+      <ol>
+        <li>Screenshot voucher sebagai bukti.</li>
+        <li>Klik tombol Klaim via WhatsApp dan kirim pesan beserta screenshot.</li>
+        <li>Hadiah wajib diklaim dalam 1x24 jam.</li>
+        <li>Hadiah tidak dapat ditukar dengan uang tunai.</li>
+        <li>Keputusan penyelenggara bersifat final.</li>
+      </ol>
+      <h3>5. Ketentuan Tambahan</h3>
+      <ol>
+        <li>Penyelenggara berhak membatalkan hadiah bila ditemukan kecurangan.</li>
+        <li>Syarat dan ketentuan dapat berubah sewaktu-waktu.</li>
+      </ol>
+      <p style="margin-top:14px;font-size:11px;color:var(--text-lt);font-style:italic;">Terakhir diperbarui: Maret 2026 · Source Crocs</p>
+    </div>
+    <div class="snk-hint" id="snkHint"><span>▼ scroll untuk lanjut ▼</span></div>
+    <div class="snk-footer">
+      <div class="snk-check" onclick="toggleSnkCheck()">
+        <div class="snk-checkbox" id="snkCheckbox">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="snk-check-lbl">Saya setuju dengan persyaratan di atas</span>
+      </div>
+      <button class="snk-start" id="snkStart" disabled onclick="startGame()">Mulai Lucky Draw →</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPIRED OVERLAY -->
+<div class="expired-overlay" id="expiredOverlay">
+  <div class="expired-box">
+    <div class="expired-icon">🍀⏳</div>
+    <div class="expired-title">Event Berakhir</div>
+    <div class="expired-sub">Thank You For Participating!<br>Pantau media sosial kami untuk event berikutnya!</div>
+  </div>
+</div>
+
+<!-- RESULT MODAL -->
+<div class="modal-overlay" id="resultModal">
+  <div class="modal">
+    <span class="modal-ornament" id="modalOrnament">🎁</span>
+    <div class="modal-title" id="modalTitle">SELAMAT!</div>
+    <div class="modal-prize" id="modalPrize">Hadiah</div>
+    <div class="modal-sub" id="modalSub">Kode telah hangus</div>
+
+    <div class="modal-voucher" id="modalVoucher">
+      <div class="voucher-header">
+        <div class="voucher-logo-icon">🍀</div>
+        <div class="voucher-brand">
+          <div class="voucher-brand-name">SOURCE CROCS</div>
+          <div class="voucher-brand-sub">Lucky Draw · St. Patrick's Day</div>
+        </div>
+      </div>
+      <div class="voucher-body">
+        <div class="voucher-prize-lbl">Hadiah Kamu</div>
+        <div class="voucher-prize-val" id="voucherPrize">—</div>
+      </div>
+      <div class="voucher-dots">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="voucher-footer">
+        <div>
+          <div class="voucher-info-lbl">Berlaku Hingga</div>
+          <div class="voucher-info-val voucher-exp-val" id="voucherExp">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="voucher-info-lbl">Nama</div>
+          <div class="voucher-info-val" id="voucherNama">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="voucher-info-lbl">Kode</div>
+          <div class="voucher-info-val" id="voucherKode">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nama-section" id="namaSection" style="display:none;">
+      <label class="nama-lbl">👤 Masukkan nama kamu</label>
+      <div class="nama-row">
+        <input class="nama-input" id="namaInput" type="text" placeholder="Nama lengkap..." maxlength="40" autocomplete="off"/>
+        <button class="nama-save-btn" id="namaSaveBtn" onclick="submitNama()">Simpan</button>
+      </div>
+      <div class="nama-saved" id="namaSaved">✓ Nama tersimpan!</div>
+    </div>
+
+    <a class="wa-btn" id="waBtn" href="#" target="_blank" style="display:none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Klaim via WhatsApp
+    </a>
+
+    <button class="modal-close-btn" onclick="closeModal()">Tutup</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  <div class="header">
+    <div class="header-eyebrow">St. Patrick's Day</div>
+    <span class="crescent">🍀🌈</span>
+    <h1>Lucky <span>Draw</span></h1>
+    <p class="header-sub">Pilih satu kotak misteri dan temukan keberuntunganmu!</p>
+    <div class="header-divider"></div>
+  </div>
+
+  <div class="countdown-bar" id="countdownBar">
+    <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);font-weight:600;">Event berakhir dalam</span>
+    <div class="cd-unit"><span class="cd-num" id="cdDays">--</span><span class="cd-lbl">Hari</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cdHours">--</span><span class="cd-lbl">Jam</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cdMins">--</span><span class="cd-lbl">Menit</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cdSecs">--</span><span class="cd-lbl">Detik</span></div>
+  </div>
+
+  <div class="conn-bar loading" id="connBar">
+    <div class="conn-dot"></div>
+    <span id="connText">Menghubungkan...</span>
+  </div>
+
+  <div class="code-panel">
+    <div class="code-panel-title">🔑 Kode Akses (8 Digit Angka)</div>
+    <div class="code-input-row">
+      <input class="code-input" id="codeInput" placeholder="12345678" maxlength="8" autocomplete="off" spellcheck="false" inputmode="numeric" pattern="\d*"/>
+      <button class="unlock-btn" id="unlockBtn" onclick="unlockAccess()">Buka Akses</button>
+    </div>
+    <div class="code-feedback" id="codeFeedback"></div>
+    <div class="status-pill locked" id="statusPill">
+      <div class="status-dot2"></div>
+      <span id="statusText">Masukkan 8 digit kode untuk memulai</span>
+    </div>
+    <div class="fp-badge" id="fpBadge"><div class="fp-dot"></div><span id="fpText">Memuat sidik perangkat...</span></div>
+    <div class="used-section">
+      <div class="used-lbl">Kode terpakai (<span id="usedCount">0</span>)</div>
+      <div class="used-chips" id="usedList"><span style="font-size:11px;color:var(--text-lt)">Belum ada</span></div>
+    </div>
+  </div>
+
+  <div class="game-section">
+    <div class="game-title">
+      <h2>Pilih Kotak Keberuntunganmu 🍀</h2>
+      <p id="gameHint">Masukkan 8 digit kode akses terlebih dahulu</p>
+    </div>
+    <div class="boxes-grid" id="boxesGrid"></div>
+  </div>
+
+  <div class="prizes-row" id="prizesList"></div>
+
+  <!-- LEADERBOARD PUBLIK -->
+  <div class="leaderboard-section" id="leaderboardSection">
+    <div class="leaderboard-header">
+      <div class="leaderboard-title">🏆 Hall of Winners</div>
+      <button class="leaderboard-refresh" id="lbRefreshBtn" onclick="loadLeaderboard()">↻ Refresh</button>
+    </div>
+    <div class="leaderboard-list" id="leaderboardList">
+      <div class="leaderboard-empty">
+        <div class="leaderboard-empty-icon">⏳</div>
+        Memuat data pemenang...
+      </div>
+    </div>
+  </div>
+
+
+<!-- LIVE WINNER FEED -->
+<div class="winner-feed" id="winnerFeed"></div>
+
+<div id="adminPanel" class="admin-panel">
+  <div class="admin-content">
+    
+    <div class="admin-header">
+      <h2>🎁 Lucky Draw Admin</h2>
+      <button class="admin-close" onclick="closeAdminPanel()">Close ×</button>
+    </div>
+ 
+    <div class="admin-body">
+      
+      <div id="adminAlert"></div>
+ 
+      <!-- STATS -->
+      <div class="admin-stats">
+        <div class="admin-stat">
+          <div class="admin-stat-value" id="adminStatTotal">0</div>
+          <div class="admin-stat-label">Total Codes</div>
+        </div>
+        <div class="admin-stat">
+          <div class="admin-stat-value" id="adminStatAvail">0</div>
+          <div class="admin-stat-label">Available</div>
+        </div>
+        <div class="admin-stat">
+          <div class="admin-stat-value" id="adminStatUsed">0</div>
+          <div class="admin-stat-label">Used</div>
+        </div>
+        <div class="admin-stat">
+          <div class="admin-stat-value" id="adminStatWinners">0</div>
+          <div class="admin-stat-label">Winners</div>
+        </div>
+      </div>
+ 
+      <!-- TABS -->
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" onclick="switchAdminTab('codes', this)">📌 All Codes</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('add', this)">➕ Add Codes</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('winners', this)">🏆 Winners</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('stats', this)">📊 Statistik</button>
+      </div>
+ 
+      <!-- TAB: CODES -->
+      <div id="admin-codes" class="admin-tab-content active">
+        <input type="search" id="adminSearchCodes" class="admin-search" placeholder="🔍 Search codes..." onkeyup="filterAdminCodes()">
+        <div style="overflow-x: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Status</th>
+                <th>Prize</th>
+                <th>Winner</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminCodesTable">
+              <tr><td colspan="5" class="admin-empty">⏳ Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- TAB: ADD CODES -->
+      <div id="admin-add" class="admin-tab-content">
+        <div class="admin-form-group">
+          <label>Masukkan 8 digit kode angka (satu per baris atau dipisah dengan | atau koma)</label>
+          <textarea id="adminCodesInput" placeholder="12345678&#10;87654321&#10;11223344"></textarea>
+        </div>
+        <div class="admin-btn-group">
+          <button class="admin-btn admin-btn-primary" onclick="adminAddCodes()">➕ Tambah Kode</button>
+          <button class="admin-btn admin-btn-secondary" onclick="adminAddSample()">📋 Sample (10)</button>
+          <button class="admin-btn admin-btn-secondary" onclick="adminAddRandom()">🔢 Random 8-Digit (20)</button>
+          <button class="admin-btn admin-btn-danger" onclick="adminConfirmReset()">⚠️ Reset All</button>
+        </div>
+      </div>
+ 
+      <!-- TAB: WINNERS -->
+      <div id="admin-winners" class="admin-tab-content">
+        <input type="search" id="adminSearchWinners" class="admin-search" placeholder="🔍 Search winners..." onkeyup="filterAdminWinners()">
+        <div style="overflow-x: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Prize</th>
+                <th>Winner</th>
+                <th>Date Won</th>
+              </tr>
+            </thead>
+            <tbody id="adminWinnersTable">
+              <tr><td colspan="4" class="admin-empty">⏳ Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      <!-- TAB: STATISTIK -->
+      <div id="admin-stats" class="admin-tab-content">
+        <div class="chart-grid">
+          <!-- Donut: Used vs Available -->
+          <div class="chart-card">
+            <div class="chart-card-title">🍩 Status Kode</div>
+            <div class="chart-donut-wrap">
+              <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle id="donutBg"   cx="60" cy="60" r="46" fill="none" stroke="rgba(46,125,50,0.1)" stroke-width="16"/>
+                <circle id="donutUsed" cx="60" cy="60" r="46" fill="none" stroke="#C03030" stroke-width="16" stroke-dasharray="0 289" stroke-linecap="round"/>
+                <circle id="donutAvail" cx="60" cy="60" r="46" fill="none" stroke="#2E7D32" stroke-width="16" stroke-dasharray="0 289" stroke-linecap="round"/>
+              </svg>
+              <div class="chart-donut-center">
+                <div class="chart-donut-pct" id="donutPct">0%</div>
+                <div class="chart-donut-lbl">Terpakai</div>
+              </div>
+            </div>
+            <div class="chart-legend">
+              <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#2E7D32"></div>Available</div>
+              <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#C03030"></div>Used</div>
+            </div>
+          </div>
+
+          <!-- Bar: Distribusi Hadiah -->
+          <div class="chart-card">
+            <div class="chart-card-title">🎁 Distribusi Hadiah</div>
+            <div class="chart-bar-wrap" id="prizeDistBars">
+              <div style="font-size:11px;color:var(--text-lt);text-align:center;padding:20px 0">⏳ Memuat...</div>
+            </div>
+          </div>
+
+          <!-- Stats ringkas -->
+          <div class="chart-card">
+            <div class="chart-card-title">📈 Ringkasan</div>
+            <div class="chart-stat-row">
+              <div class="chart-stat"><div class="chart-stat-val" id="chartConvRate">0%</div><div class="chart-stat-lbl">Conversion</div></div>
+              <div class="chart-stat"><div class="chart-stat-val" id="chartWinRate">0%</div><div class="chart-stat-lbl">Win Rate</div></div>
+              <div class="chart-stat"><div class="chart-stat-val" id="chartAvgPerDay">0</div><div class="chart-stat-lbl">Per Hari</div></div>
+            </div>
+          </div>
+
+          <!-- Bar: Prize probability -->
+          <div class="chart-card">
+            <div class="chart-card-title">⚖️ Bobot Hadiah</div>
+            <div class="chart-bar-wrap" id="prizeWeightBars"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+ 
+    </div>
+ 
+  </div>
+</div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  CONFIG — ⚠️ GANTI URL INI DENGAN APPS SCRIPT ANDA ⚠️
+// ═══════════════════════════════════════════════
+const SCRIPT_URL  = "https://script.google.com/macros/s/AKfycbwpYHnDm8DGSOCs-mEdV0bwSh02xOWoQMW4BS_2KUQ4IjC5iihs8LxeDs1u-U8cWIgD/exec";
+const WA_NUMBER   = "62895342072060";
+const EVENT_END   = new Date('2026-06-07T23:59:59');
+
+const PRIZES = [
+  // Crocs: weight 0 = tidak pernah bisa dimenangkan, tapi tetap tampil sebagai display
+  { label: "Crocs Classic Clog",  emoji: "👟", weight: 0,  color: "#C9A84C" },
+  { label: "DANA KAGET 30RB",     emoji: "💰", weight: 3,  color: "#2D6A4F" },
+  { label: "Diskon 35RB",         emoji: "🎁", weight: 23, color: "#40916C" },
+  { label: "Diskon 20RB",         emoji: "🏷️", weight: 30, color: "#74C69D" },
+  { label: "Coba Lagi",           emoji: "🍀", weight: 60, color: "#8AAA97" },
+];
+// TOTAL_W hanya menghitung prize dengan weight > 0
+const TOTAL_W = PRIZES.reduce((s,p) => s + p.weight, 0);
+
+let validCodes  = new Set();
+let usedCodes   = new Set();
+let isConnected = false;
+let isUnlocked  = false;
+let currentCode = '';
+let pendingCode = '';
+let pendingHadiah = '';
+let hasPlayed   = false;
+
+// Format kode: hanya angka 0-9, maksimal 8 digit
+function formatCodeInput(value) {
+  // Hanya izinkan angka
+  return value.replace(/[^0-9]/g, '').slice(0, 8);
+}
+
+// Validasi kode: harus 8 digit angka
+function isValidCodeFormat(code) {
+  return /^\d{8}$/.test(code);
+}
+
+async function apiCall(params) {
+  const url = SCRIPT_URL + '?' + new URLSearchParams(params).toString();
+  try {
+    const res  = await fetch(url, { redirect: 'follow' });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error('apiCall error:', err);
+    return { success: false, message: 'Error' };
+  }
+}
+
+async function initCodes() {
+  setTimeout(() => { document.getElementById('checkingBar').style.width = '100%'; }, 50);
+  
+  const [data] = await Promise.all([
+    apiCall({ action: 'list' }),
+    new Promise(r => setTimeout(r, 3000))
+  ]);
+  
+  if (!data.success) {
+    setCheckStatus('error', '❌ Server Disconnected');
+    document.getElementById('checkingBar').style.background = '#C03030';
+    document.getElementById('checkingRetry').style.display = 'block';
+    return;
+  }
+  
+  validCodes = new Set(data.available);
+  usedCodes  = new Set(data.used);
+  isConnected = true;
+  setCheckStatus('ok', '✅ Server Online Verified');
+  document.getElementById('checkingBar').style.background = 'var(--green)';
+  setTimeout(proceedToSnk, 800);
+  renderUsedCodes();
+}
+
+function setCheckStatus(type, text) {
+  const el = document.getElementById('checkingStatus');
+  el.className = 'checking-status ' + type;
+  el.textContent = text;
+}
+
+function proceedToSnk() {
+  if (checkExpired()) return;
+  const el = document.getElementById('checkingOverlay');
+  el.style.transition = 'opacity 0.4s ease';
+  el.style.opacity = '0';
+  setTimeout(() => { el.style.display = 'none'; document.getElementById('snkOverlay').style.display = 'flex'; }, 400);
+}
+
+function retryChecking() {
+  setCheckStatus('', '⏳ Checking server...');
+  document.getElementById('checkingBar').style.transition = 'none';
+  document.getElementById('checkingBar').style.width = '0%';
+  document.getElementById('checkingBar').style.background = 'linear-gradient(90deg, var(--green), var(--gold))';
+  document.getElementById('checkingRetry').style.display = 'none';
+  setTimeout(() => { document.getElementById('checkingBar').style.transition = 'width 3s linear'; initCodes(); }, 100);
+}
+
+function setConnStatus(type, text) {
+  const el = document.getElementById('connBar');
+  el.className = 'conn-bar ' + type;
+  document.getElementById('connText').textContent = text;
+}
+
+function checkExpired() {
+  if (new Date() > EVENT_END) {
+    document.getElementById('expiredOverlay').classList.add('show');
+    return true;
+  }
+  return false;
+}
+
+function updateCountdown() {
+  const diff = EVENT_END - new Date();
+  if (diff <= 0) { checkExpired(); return; }
+  document.getElementById('cdDays').textContent  = String(Math.floor(diff/(1000*60*60*24))).padStart(2,'0');
+  document.getElementById('cdHours').textContent = String(Math.floor((diff%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
+  document.getElementById('cdMins').textContent  = String(Math.floor((diff%(1000*60*60))/(1000*60))).padStart(2,'0');
+  document.getElementById('cdSecs').textContent  = String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
+}
+if (!checkExpired()) { updateCountdown(); setInterval(updateCountdown, 1000); }
+
+let snkScrolled = false, snkChecked = false;
+const snkBodyEl = document.getElementById('snkBody');
+snkBodyEl.addEventListener('scroll', () => {
+  if (snkBodyEl.scrollHeight - snkBodyEl.scrollTop - snkBodyEl.clientHeight < 30) {
+    snkScrolled = true;
+    document.getElementById('snkHint').style.opacity = '0';
+    updateSnkBtn();
+  }
+});
+function toggleSnkCheck() {
+  if (!snkScrolled) { snkBodyEl.scrollBy({ top: 80, behavior: 'smooth' }); return; }
+  snkChecked = !snkChecked;
+  document.getElementById('snkCheckbox').classList.toggle('checked', snkChecked);
+  updateSnkBtn();
+}
+function updateSnkBtn() { document.getElementById('snkStart').disabled = !(snkScrolled && snkChecked); }
+function startGame() {
+  document.getElementById('snkOverlay').style.opacity = '0';
+  document.getElementById('snkOverlay').style.transition = 'opacity 0.3s';
+  setTimeout(() => { document.getElementById('snkOverlay').style.display = 'none'; startAmbient(); }, 300);
+}
+
+const codeInputEl  = document.getElementById('codeInput');
+const codeFeedback = document.getElementById('codeFeedback');
+const unlockBtnEl  = document.getElementById('unlockBtn');
+
+codeInputEl.addEventListener('input', () => {
+  let v = codeInputEl.value;
+  v = formatCodeInput(v);
+  codeInputEl.value = v;
+  
+  codeInputEl.classList.remove('valid','invalid');
+  codeFeedback.className = 'code-feedback'; codeFeedback.textContent = '';
+  
+  if (v.length < 2) return;
+  
+  if (!isValidCodeFormat(v)) {
+    if (v.length === 8) {
+      codeInputEl.classList.add('invalid');
+      setFeedback('err','✗ Kode harus 8 digit angka!');
+    }
+    return;
+  }
+  
+  if (usedCodes.has(v)) { 
+    codeInputEl.classList.add('invalid'); 
+    setFeedback('err','✗ Kode sudah digunakan'); 
+  }
+  else if (validCodes.has(v)) { 
+    codeInputEl.classList.add('valid'); 
+    setFeedback('ok','✓ Kode valid!'); 
+  }
+  else if (v.length === 8) { 
+    codeInputEl.classList.add('invalid'); 
+    setFeedback('err','✗ Kode tidak ditemukan'); 
+  }
+});
+
+codeInputEl.addEventListener('keydown', e => { if (e.key==='Enter') unlockAccess(); });
+
+// Prevent non-numeric input
+codeInputEl.addEventListener('keypress', (e) => {
+  const char = String.fromCharCode(e.which);
+  if (!/[0-9]/.test(char)) {
+    e.preventDefault();
+  }
+});
+
+// Paste handler
+codeInputEl.addEventListener('paste', (e) => {
+  e.preventDefault();
+  const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+  const formatted = formatCodeInput(pastedText);
+  codeInputEl.value = formatted;
+  codeInputEl.dispatchEvent(new Event('input'));
+});
+
+function setFeedback(type, text) {
+  codeFeedback.className = 'code-feedback ' + type;
+  codeFeedback.textContent = text;
+}
+
+const rateLimitMap = {};
+function checkRateLimit(action) {
+  const now = Date.now(), limit = { check:{max:5,window:60000} };
+  if (!limit[action]) return true;
+  if (!rateLimitMap[action]) rateLimitMap[action] = [];
+  rateLimitMap[action] = rateLimitMap[action].filter(t => now - t < limit[action].window);
+  if (rateLimitMap[action].length >= limit[action].max) return false;
+  rateLimitMap[action].push(now); return true;
+}
+
+async function unlockAccess() {
+  let code = codeInputEl.value.trim();
+  
+  if (!code || !isConnected) return;
+  
+  // Validasi format
+  if (!isValidCodeFormat(code)) {
+    shake(codeInputEl);
+    setFeedback('err','✗ Kode harus 8 digit angka!');
+    return;
+  }
+  
+  if (usedCodes.has(code) || isSessionUsed(code)) { 
+    shake(codeInputEl); haptic('error');
+    setFeedback('err','✗ Kode sudah digunakan!'); 
+    return; 
+  }
+  
+  if (!checkRateLimit('check')) { 
+    setFeedback('err','✗ Terlalu banyak percobaan!'); 
+    return; 
+  }
+  
+  unlockBtnEl.disabled = true;
+  setFeedback('loading','⏳ Memverifikasi...');
+  
+  const res = await apiCall({ action:'check', code });
+  
+  if (!res.success) {
+    unlockBtnEl.disabled = false; 
+    shake(codeInputEl); haptic('error');
+    setFeedback('err', res.status==='used' ? '✗ Kode sudah digunakan!' : res.status==='expired' ? '✗ Kode sudah kadaluarsa!' : '✗ Kode tidak valid!');
+    return;
+  }
+  
+  currentCode = code; 
+  isUnlocked = true; 
+  hasPlayed = false;
+  unlockBtnEl.disabled = true; 
+  codeInputEl.disabled = true;
+  document.getElementById('statusPill').className = 'status-pill unlocked';
+  document.getElementById('statusText').textContent = 'Akses dibuka! Pilih kotakmu 🎁';
+  setFeedback('ok','✓ Kode diterima!');
+  activateBoxes();
+  playUnlockSound(); haptic('unlock');
+}
+
+function buildBoxes() {
+  const grid = document.getElementById('boxesGrid');
+  grid.innerHTML = '';
+  for (let i = 1; i <= 9; i++) {
+    const box = document.createElement('div');
+    box.className = 'box';
+    box.id = 'box-' + i;
+    box.innerHTML = `
+      <div class="box-inner">
+        <div class="box-lid"><div class="box-lid-icon">🍀</div></div>
+        <div class="box-ribbon-h"></div>
+        <div class="box-ribbon-v"></div>
+        <div class="box-body"></div>
+        <div class="box-num">${String(i).padStart(2,'0')}</div>
+        <div class="box-result"></div>
+      </div>`;
+    grid.appendChild(box);
+  }
+}
+
+function activateBoxes() {
+  if (hasPlayed) return;
+  buildBoxes();
+  document.getElementById('gameHint').textContent = 'Pilih satu kotak untuk membukanya! 🎁';
+  for (let i = 1; i <= 9; i++) {
+    const box = document.getElementById('box-' + i);
+    box.classList.add('active');
+    box.onclick = () => openBox(i);
+  }
+}
+
+// ─── SCRATCH CARD ──────────────────────────────────────────
+let scratchActive = false;
+
+function openBox(num) {
+  if (!isUnlocked || hasPlayed) return;
+  haptic('tap');
+  hasPlayed = true;
+  deactivateBoxes();
+
+  const rand = Math.random() * TOTAL_W;
+  let cumulative = 0, winner = PRIZES[PRIZES.length-1];
+  for (const prize of PRIZES) {
+    if (prize.weight <= 0 || prize.hidden) continue;
+    cumulative += prize.weight;
+    if (rand < cumulative) { winner = prize; break; }
+  }
+  if (winner.hidden || winner.weight <= 0) {
+    winner = PRIZES.find(p => p.label === 'Coba Lagi') || PRIZES[PRIZES.length-1];
+  }
+
+  playBoxOpenSound();
+
+  // Ganti kotak yang dipilih dengan scratch card
+  setTimeout(() => {
+    const box = document.getElementById('box-' + num);
+    const inner = box.querySelector('.box-inner');
+    const isLose = winner.label === 'Coba Lagi';
+
+    // Sembunyikan elemen kotak asli
+    inner.querySelectorAll('.box-lid, .box-ribbon-h, .box-ribbon-v, .box-body, .box-num').forEach(el => el.style.display = 'none');
+
+    // Buat scratch wrapper
+    const sw = document.createElement('div');
+    sw.className = 'scratch-wrapper';
+    sw.id = 'scratch-' + num;
+
+    // Layer bawah: isi hadiah
+    const reveal = document.createElement('div');
+    reveal.className = 'scratch-reveal';
+    reveal.innerHTML = `
+      <div class="scratch-reveal-emoji">${winner.emoji}</div>
+      <div class="scratch-reveal-label ${isLose ? 'lose' : ''}">${winner.label}</div>`;
+
+    // Canvas untuk efek gosok
+    const canvas = document.createElement('canvas');
+    canvas.className = 'scratch-canvas';
+
+    // Hint text
+    const hint = document.createElement('div');
+    hint.className = 'scratch-hint';
+    hint.textContent = '✦ Gosok di sini ✦';
+
+    sw.appendChild(reveal);
+    sw.appendChild(canvas);
+    sw.appendChild(hint);
+    inner.appendChild(sw);
+
+    box.classList.add('opened');
+    box.querySelector('.box-result').style.display = 'none';
+
+    // Init canvas scratch
+    initScratch(canvas, hint, winner, num);
+
+    // Reveal kotak lain
+    setTimeout(() => revealOtherBoxes(num, winner), 500);
+  }, 200);
+}
+
+function initScratch(canvas, hint, winner, num) {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width  = rect.width  || 160;
+  canvas.height = rect.height || 160;
+
+  const ctx = canvas.getContext('2d');
+
+  // Gambar permukaan gosok (gradient hijau seperti kotak)
+  const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  grad.addColorStop(0, '#2E7D32');
+  grad.addColorStop(1, '#43A047');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Teks dekorasi di permukaan
+  ctx.fillStyle = 'rgba(255,215,0,0.3)';
+  ctx.font = `bold ${Math.floor(canvas.width * 0.22)}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🍀', canvas.width/2, canvas.height/2);
+
+  ctx.globalCompositeOperation = 'destination-out';
+
+  let isDrawing = false, totalPixels = canvas.width * canvas.height, scratchedPercent = 0;
+  let lastX = 0, lastY = 0;
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    if (e.touches) return { x: e.touches[0].clientX - r.left, y: e.touches[0].clientY - r.top };
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+
+  function scratch(x, y) {
+    ctx.beginPath();
+    ctx.arc(x, y, canvas.width * 0.12, 0, Math.PI * 2);
+    ctx.fill();
+    if (lastX && lastY) {
+      ctx.beginPath();
+      ctx.lineWidth = canvas.width * 0.22;
+      ctx.lineCap = 'round';
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+    lastX = x; lastY = y;
+    checkScratchPercent();
+  }
+
+  function checkScratchPercent() {
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let cleared = 0;
+    for (let i = 3; i < imgData.data.length; i += 4) {
+      if (imgData.data[i] === 0) cleared++;
+    }
+    scratchedPercent = (cleared / totalPixels) * 100;
+    if (scratchedPercent > 55 && canvas.style.display !== 'none') {
+      // Auto-complete reveal
+      canvas.style.transition = 'opacity 0.4s ease';
+      canvas.style.opacity = '0';
+      if (hint) hint.style.opacity = '0';
+      setTimeout(() => {
+        canvas.style.display = 'none';
+        if (hint) hint.style.display = 'none';
+        showResult(winner);
+        triggerWinnerFeed(winner);
+      }, 400);
+    }
+  }
+
+  canvas.addEventListener('mousedown', e => { isDrawing = true; lastX = 0; lastY = 0; const p = getPos(e); scratch(p.x, p.y); });
+  canvas.addEventListener('mousemove', e => { if (!isDrawing) return; const p = getPos(e); scratch(p.x, p.y); });
+  canvas.addEventListener('mouseup', () => { isDrawing = false; lastX = 0; lastY = 0; });
+  canvas.addEventListener('mouseleave', () => { isDrawing = false; lastX = 0; lastY = 0; });
+
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); isDrawing = true; lastX = 0; lastY = 0; const p = getPos(e); scratch(p.x, p.y); }, { passive: false });
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!isDrawing) return; const p = getPos(e); scratch(p.x, p.y); }, { passive: false });
+  canvas.addEventListener('touchend', () => { isDrawing = false; lastX = 0; lastY = 0; });
+}
+
+
+
+function revealOtherBoxes(chosen, winner) {
+  for (let i = 1; i <= 9; i++) {
+    if (i === chosen) continue;
+    const box = document.getElementById('box-' + i);
+    setTimeout(() => {
+      box.classList.add('opened');
+  const others = PRIZES.filter(p => p.label !== winner.label || p.label === 'Coba Lagi');
+      const other  = others[Math.floor(Math.random() * others.length)];
+      const result = box.querySelector('.box-result');
+      result.innerHTML = `
+        <div class="box-result-emoji" style="font-size:1.4rem;opacity:0.5">${other.emoji}</div>
+        <div class="box-result-label lose" style="font-size:10px;opacity:0.6">${other.label}</div>`;
+    }, (i - 1) * 120);
+  }
+}
+
+function deactivateBoxes() {
+  document.getElementById('gameHint').textContent = 'Kotak sudah dibuka!';
+  for (let i = 1; i <= 9; i++) {
+    const box = document.getElementById('box-' + i);
+    if (box) { box.classList.remove('active'); box.onclick = null; box.style.cursor = 'default'; }
+  }
+}
+
+function triggerWinnerFeed(prize) {
+  const isLose = prize.label === 'Coba Lagi';
+  if (isLose) return; // hanya tampil kalau menang
+  const nama = document.getElementById('namaInput')?.value?.trim() || 'Seseorang';
+  showWinnerToast(nama, prize);
+}
+
+function showResult(prize) {
+  const isLose = prize.label === 'Coba Lagi';
+  document.getElementById('modalOrnament').textContent = prize.emoji;
+  document.getElementById('modalTitle').textContent    = isLose ? 'SAYANG SEKALI...' : 'SELAMAT!';
+  const prizeEl = document.getElementById('modalPrize');
+  prizeEl.textContent = prize.label;
+  prizeEl.className   = 'modal-prize' + (isLose ? ' lose' : '');
+  document.getElementById('modalSub').textContent = 'Kode yang digunakan telah hangus';
+
+  if (!isLose) {
+    const expDate = new Date();
+    expDate.setDate(expDate.getDate() + 21);
+    const expStr = expDate.toLocaleDateString('id-ID', {day:'2-digit',month:'long',year:'numeric'});
+
+    pendingCode   = currentCode;
+    pendingHadiah = prize.label;
+
+    document.getElementById('voucherPrize').textContent = prize.label;
+    document.getElementById('voucherExp').textContent   = expStr;
+    document.getElementById('voucherKode').textContent  = currentCode;
+    document.getElementById('voucherNama').textContent  = '—';
+    document.getElementById('modalVoucher').style.display = 'block';
+
+    document.getElementById('namaSection').style.display = 'block';
+    document.getElementById('namaInput').value = '';
+    document.getElementById('namaSaved').style.display = 'none';
+    document.getElementById('namaSaveBtn').disabled = false;
+    document.getElementById('namaSaveBtn').textContent = 'Simpan';
+
+    const pesan = encodeURIComponent(
+      `Halo! Saya mendapat hadiah dari Lucky Draw St. Patrick's Day 🍀🌈\n\n` +
+      `🎁 Hadiah: ${prize.label}\n` +
+      `📅 Berlaku hingga: ${expStr}\n\n` +
+      `Saya sudah screenshot voucher. Mohon bantu proses klaim hadiah saya ya!`
+    );
+    const waBtnEl = document.getElementById('waBtn');
+    waBtnEl.href = `https://wa.me/${WA_NUMBER}?text=${pesan}`;
+    waBtnEl.style.display = 'flex';
+  } else {
+    document.getElementById('modalVoucher').style.display = 'none';
+    document.getElementById('namaSection').style.display  = 'none';
+    document.getElementById('waBtn').style.display        = 'none';
+  }
+
+  document.getElementById('resultModal').classList.add('show');
+
+  apiCall({ action:'use', code:currentCode, hadiah:prize.label });
+  usedCodes.add(currentCode); validCodes.delete(currentCode); markSession(currentCode);
+  renderUsedCodes();
+  setConnStatus('ok', `✅ Server Online Verified`);
+
+  if (!isLose) {
+    launchConfetti();
+    playWinSound(); haptic('win');
+    // Tunda feed agar nama bisa diisi dulu; fallback "Pemenang Baru" jika belum
+    setTimeout(() => {
+      const namaVal = document.getElementById('namaInput')?.value?.trim();
+      showWinnerToast(namaVal || 'Pemenang Baru 🎉', prize);
+    }, 3000);
+  } else { playLoseSound(); haptic('lose'); }
+}
+
+function closeModal() {
+  document.getElementById('resultModal').classList.remove('show');
+  pendingCode = ''; pendingHadiah = '';
+  const ni = document.getElementById('namaInput');
+  if (ni) { ni.value = ''; ni.style.borderColor = ''; }
+  const ns = document.getElementById('namaSaved');
+  if (ns) ns.style.display = 'none';
+  const nb = document.getElementById('namaSaveBtn');
+  if (nb) { nb.disabled = false; nb.textContent = 'Simpan'; }
+}
+document.getElementById('resultModal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+
+async function submitNama() {
+  const nama = document.getElementById('namaInput').value.trim();
+  if (!nama || !pendingCode) return;
+  const btn = document.getElementById('namaSaveBtn');
+  btn.disabled = true; btn.textContent = '⏳';
+  await apiCall({ action:'savename', code:pendingCode, nama });
+  document.getElementById('voucherNama').textContent = nama;
+  document.getElementById('namaSaved').style.display = 'block';
+  btn.textContent = '✓';
+
+  // Update winner feed dengan nama yang baru disimpan
+  const savedPrize = PRIZES.find(p => p.label === pendingHadiah) || { emoji: '🎁', label: pendingHadiah };
+  showWinnerToast(nama, savedPrize);
+  // Refresh leaderboard
+  setTimeout(loadLeaderboard, 1500);
+
+  const expStr = document.getElementById('voucherExp').textContent;
+  const pesan = encodeURIComponent(
+    `Halo! Saya mendapat hadiah dari Lucky Draw St. Patrick's Day 🍀🌈\n\n` +
+    `👤 Nama   : ${nama}\n` +
+    `🎁 Hadiah : ${pendingHadiah}\n` +
+    `📅 Berlaku hingga: ${expStr}\n\n` +
+    `Saya sudah screenshot voucher. Mohon bantu proses klaim hadiah saya ya!`
+  );
+  document.getElementById('waBtn').href = `https://wa.me/${WA_NUMBER}?text=${pesan}`;
+}
+
+function renderUsedCodes() {
+  const el = document.getElementById('usedList');
+  document.getElementById('usedCount').textContent = usedCodes.size;
+  el.innerHTML = usedCodes.size === 0
+    ? '<span style="font-size:11px;color:var(--text-lt)">Belum ada</span>'
+    : [...usedCodes].map(c=>`<div class="used-chip">${c}</div>`).join('');
+}
+
+function buildPrizeList() {
+  document.getElementById('prizesList').innerHTML = PRIZES.map(p =>
+    `<div class="prize-chip">${p.emoji} <span>${p.label}</span></div>`
+  ).join('');
+}
+
+function launchConfetti() {
+  const cv = document.getElementById('confetti'), c = cv.getContext('2d');
+  cv.width = window.innerWidth; cv.height = window.innerHeight;
+  // St. Patrick's confetti colors
+  const colors = ['#2E7D32','#43A047','#81C784','#FFD700','#FFEB3B','#FFFFFF','#FF9800'];
+  const pieces = Array.from({length:120}, () => ({
+    x:Math.random()*cv.width, y:-20, w:6+Math.random()*8, h:3+Math.random()*5,
+    r:Math.random()*Math.PI*2, dr:(Math.random()-.5)*.15, dx:(Math.random()-.5)*3,
+    dy:2+Math.random()*4, color:colors[Math.floor(Math.random()*colors.length)]
+  }));
+  let f = 0;
+  function draw() {
+    c.clearRect(0,0,cv.width,cv.height);
+    pieces.forEach(p=>{p.x+=p.dx;p.y+=p.dy;p.r+=p.dr;p.dy+=0.06;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.color;c.fillRect(-p.w/2,-p.h/2,p.w,p.h);c.restore();});
+    f++; if(f<200) requestAnimationFrame(draw); else c.clearRect(0,0,cv.width,cv.height);
+  }
+  draw();
+}
+
+let audioCtx = null, isMuted = false, ambientRunning = false;
+let ambientNodes = [], ambientGainNode = null, chipTimeout = null, melodyInterval2 = null;
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function toggleMute() {
+  isMuted = !isMuted;
+  document.getElementById('audioBtn').textContent = isMuted ? '🔇' : '🔊';
+  if (ambientGainNode) ambientGainNode.gain.value = isMuted ? 0 : 0.15;
+  if (isMuted) stopAmbient(); else startAmbient();
+}
+
+function startAmbient() {
+  if (ambientRunning || isMuted) return;
+  ambientRunning = true;
+  const ctx = getCtx();
+  ambientGainNode = ctx.createGain();
+  ambientGainNode.gain.setValueAtTime(0, ctx.currentTime);
+  ambientGainNode.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 3);
+  ambientGainNode.connect(ctx.destination);
+
+  // Irish-inspired drone
+  [55, 82].forEach((f, i) => {
+    const osc = ctx.createOscillator(), g = ctx.createGain(), flt = ctx.createBiquadFilter();
+    osc.type = 'sine'; osc.frequency.value = f; flt.type = 'lowpass'; flt.frequency.value = 180;
+    g.gain.value = i === 0 ? 0.4 : 0.2;
+    osc.connect(flt); flt.connect(g); g.connect(ambientGainNode); osc.start();
+    ambientNodes.push(osc);
+  });
+
+  const chords = [[261,329,392],[293,369,440],[261,329,392],[246,311,369]];
+  let ci = 0;
+  function playChord() {
+    if (!ambientRunning || isMuted) return;
+    chords[ci%chords.length].forEach(f => {
+      const osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.type = 'sine'; osc.frequency.value = f;
+      g.gain.setValueAtTime(0, ctx.currentTime);
+      g.gain.linearRampToValueAtTime(0.07, ctx.currentTime + 0.3);
+      g.gain.linearRampToValueAtTime(0, ctx.currentTime + 2.5);
+      osc.connect(g); g.connect(ambientGainNode); osc.start(); osc.stop(ctx.currentTime + 2.8);
+    }); ci++;
+  }
+  playChord();
+  melodyInterval2 = setInterval(() => { if (ambientRunning && !isMuted) playChord(); }, 3000);
+
+  function chip() {
+    if (!ambientRunning || isMuted) return;
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.04, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random()*2-1) * Math.exp(-i/(ctx.sampleRate*.006));
+    const src = ctx.createBufferSource(), g = ctx.createGain(), flt = ctx.createBiquadFilter();
+    src.buffer = buf; flt.type = 'highpass'; flt.frequency.value = 1800 + Math.random()*800;
+    g.gain.value = 0.15 + Math.random()*.15;
+    src.connect(flt); flt.connect(g); g.connect(ambientGainNode); src.start();
+    chipTimeout = setTimeout(chip, 1200 + Math.random()*2800);
+  }
+  chip();
+
+  let beat = 0;
+  const beatInt = setInterval(() => {
+    if (!ambientRunning || isMuted) return;
+    beat++;
+    const buf = ctx.createBuffer(1, ctx.sampleRate*.025, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random()*2-1) * Math.exp(-i/(ctx.sampleRate*.003));
+    const src = ctx.createBufferSource(), g = ctx.createGain(), flt = ctx.createBiquadFilter();
+    src.buffer = buf; flt.type = 'highpass'; flt.frequency.value = 8000;
+    g.gain.value = beat%4===1||beat%4===3 ? 0.06 : 0.02;
+    src.connect(flt); flt.connect(g); g.connect(ambientGainNode); src.start();
+  }, 500);
+  ambientNodes.push({ stop: () => clearInterval(beatInt) });
+}
+
+function stopAmbient() {
+  ambientRunning = false;
+  if (chipTimeout) clearTimeout(chipTimeout);
+  if (melodyInterval2) clearInterval(melodyInterval2);
+  if (ambientGainNode && audioCtx) {
+    ambientGainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+    setTimeout(() => {
+      ambientNodes.forEach(n => { try{n.stop()}catch(e){} });
+      ambientNodes = []; ambientGainNode = null;
+    }, 1000);
+  }
+}
+
+function playUnlockSound() {
+  if (isMuted) return;
+  const ctx = getCtx();
+  [523,659,784].forEach((f,i) => {
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = f;
+    g.gain.setValueAtTime(0, ctx.currentTime + i*.1);
+    g.gain.linearRampToValueAtTime(0.2, ctx.currentTime + i*.1 + .05);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + i*.1 + .2);
+    osc.connect(g); g.connect(ctx.destination); osc.start(ctx.currentTime + i*.1); osc.stop(ctx.currentTime + i*.1 + .25);
+  });
+}
+
+function playBoxOpenSound() {
+  if (isMuted) return;
+  const ctx = getCtx();
+  const osc = ctx.createOscillator(), g = ctx.createGain();
+  osc.type = 'sine'; osc.frequency.setValueAtTime(300, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + .15);
+  g.gain.setValueAtTime(0.3, ctx.currentTime);
+  g.gain.linearRampToValueAtTime(0, ctx.currentTime + .3);
+  osc.connect(g); g.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + .35);
+}
+
+function playWinSound() {
+  if (isMuted) return;
+  const ctx = getCtx();
+  [523,659,784,1047].forEach((f,i) => {
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = f;
+    g.gain.setValueAtTime(0, ctx.currentTime + i*.12);
+    g.gain.linearRampToValueAtTime(0.25, ctx.currentTime + i*.12 + .05);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + i*.12 + .25);
+    osc.connect(g); g.connect(ctx.destination); osc.start(ctx.currentTime + i*.12); osc.stop(ctx.currentTime + i*.12 + .3);
+  });
+}
+
+function playLoseSound() {
+  if (isMuted) return;
+  const ctx = getCtx();
+  [400,320,260].forEach((f,i) => {
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.type = 'sawtooth'; osc.frequency.value = f;
+    g.gain.setValueAtTime(0.12, ctx.currentTime + i*.15);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + i*.15 + .2);
+    osc.connect(g); g.connect(ctx.destination); osc.start(ctx.currentTime + i*.15); osc.stop(ctx.currentTime + i*.15 + .25);
+  });
+}
+
+
+// ─── ADMIN HIDDEN TRIGGER ──────────────────────────
+const ADMIN_PASSWORD = 'tegar';
+const ADMIN_URL      = 'admin.html';
+
+let adminClickCount = 0, adminClickTimer = null;
+document.getElementById('adminTrigger').addEventListener('click', () => {
+  adminClickCount++;
+  clearTimeout(adminClickTimer);
+  adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 1500);
+  if (adminClickCount >= 7) { adminClickCount = 0; openAdminLogin(); }
+});
+
+function closeAdminLogin() {
+  document.getElementById('adminLoginOverlay').classList.remove('show');
+  document.getElementById('adminPwInput').value = '';
+  document.getElementById('adminPwErr').textContent = '';
+  document.getElementById('adminPwInput').classList.remove('wrong');
+}
+
+function submitAdminLogin() {
+  const pw = document.getElementById('adminPwInput').value;
+  if (pw === ADMIN_PASSWORD) {
+    closeAdminLogin();
+    openAdminPanel();
+  } else {
+    const inp = document.getElementById('adminPwInput');
+    inp.classList.add('wrong');
+    document.getElementById('adminPwErr').textContent = '✗ Password salah, coba lagi';
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('wrong'), 400);
+    inp.focus();
+  }
+}
+
+document.getElementById('adminPwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter')  submitAdminLogin();
+  if (e.key === 'Escape') closeAdminLogin();
+});
+document.getElementById('adminLoginOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAdminLogin();
+});
+
+// ─── SESSION SECURITY ──
+const sessionUsed = new Set(JSON.parse(sessionStorage.getItem('sUsed') || '[]'));
+function markSession(code) {
+  sessionUsed.add(code);
+  sessionStorage.setItem('sUsed', JSON.stringify([...sessionUsed]));
+}
+function isSessionUsed(code) { return sessionUsed.has(code); }
+
+// ─── DEVTOOLS DETECTION ────────────────────────────
+(function devToolsGuard() {
+  setInterval(() => {
+    if (window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160) {
+      if (isUnlocked) {
+        isUnlocked = false; currentCode = '';
+        const ub = document.getElementById('unlockBtn'); if(ub) ub.disabled = false;
+        document.getElementById('codeInput').disabled = false;
+        document.getElementById('codeInput').value = '';
+        document.getElementById('statusPill').className = 'status-pill locked';
+        document.getElementById('statusText').textContent = 'Masukkan 8 digit kode untuk memulai';
+        deactivateBoxes();
+      }
+    }
+  }, 1000);
+})();
+
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if (e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key.toUpperCase()))||(e.ctrlKey&&['U','S'].includes(e.key.toUpperCase()))) { e.preventDefault(); return false; }
+});
+
+function shake(el) { el.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'translateX(0)'}],{duration:300,easing:'ease-in-out'}); haptic('error'); }
+
+// ─── LEADERBOARD ───────────────────────────────────────────
+async function loadLeaderboard() {
+  const btn = document.getElementById('lbRefreshBtn');
+  if (btn) btn.disabled = true;
+  const data = await apiCall({ action: 'get_winners' });
+  const listEl = document.getElementById('leaderboardList');
+  if (!listEl) { if (btn) btn.disabled = false; return; }
+  if (!data.success || !data.winners || data.winners.length === 0) {
+    listEl.innerHTML = '<div class="leaderboard-empty"><div class="leaderboard-empty-icon">🏆</div>Belum ada pemenang</div>';
+  } else {
+    listEl.innerHTML = data.winners.map((w, i) => `
+      <div class="leaderboard-item">
+        <div class="leaderboard-rank">${i + 1}</div>
+        <div class="leaderboard-info">
+          <div class="leaderboard-name">${w.winner || 'Anonim'}</div>
+          <div class="leaderboard-prize">${w.prize || '—'}</div>
+        </div>
+        <div class="leaderboard-date">${w.date_won || ''}</div>
+      </div>`).join('');
+  }
+  if (btn) btn.disabled = false;
+}
+
+// ─── WINNER TOAST FEED ─────────────────────────────────────
+function showWinnerToast(nama, prize) {
+  const feed = document.getElementById('winnerFeed');
+  if (!feed) return;
+  const toast = document.createElement('div');
+  toast.className = 'winner-toast';
+  const now = new Date();
+  const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  toast.innerHTML = `
+    <div class="winner-toast-icon">${prize.emoji || '🎁'}</div>
+    <div class="winner-toast-body">
+      <div class="winner-toast-name">${nama}</div>
+      <div class="winner-toast-prize">${prize.label}</div>
+    </div>
+    <div class="winner-toast-time">${timeStr}</div>`;
+  feed.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 400);
+  }, 5000);
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// FITUR 1 — HAPTIC FEEDBACK
+// ═══════════════════════════════════════════════════════════════
+function haptic(type) {
+  if (!navigator.vibrate) return;
+  const patterns = {
+    tap:     [10],
+    success: [40, 30, 40],
+    win:     [60, 40, 80, 40, 120],
+    lose:    [80, 50, 80],
+    error:   [100, 30, 100],
+    unlock:  [30, 20, 30, 20, 60],
+  };
+  navigator.vibrate(patterns[type] || [20]);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FITUR 2 — DEVICE FINGERPRINTING
+// ═══════════════════════════════════════════════════════════════
+let deviceFingerprint = null;
+
+async function generateFingerprint() {
+  const parts = [
+    navigator.userAgent,
+    navigator.language,
+    screen.width + 'x' + screen.height + 'x' + screen.colorDepth,
+    new Date().getTimezoneOffset(),
+    navigator.hardwareConcurrency || 0,
+    navigator.deviceMemory || 0,
+    navigator.platform || '',
+    !!navigator.cookieEnabled,
+    !!window.indexedDB,
+    !!window.localStorage,
+  ].join('|');
+
+  // Canvas fingerprint
+  try {
+    const cv = document.createElement('canvas');
+    const ctx2 = cv.getContext('2d');
+    ctx2.textBaseline = 'top';
+    ctx2.font = '14px Arial';
+    ctx2.fillStyle = '#2E7D32';
+    ctx2.fillText('Lucky Draw 🍀', 2, 2);
+    parts + '|' + cv.toDataURL().slice(-50);
+  } catch(e) {}
+
+  // WebGL fingerprint
+  try {
+    const gl = document.createElement('canvas').getContext('webgl');
+    if (gl) {
+      const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+      if (dbg) parts + '|' + gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
+    }
+  } catch(e) {}
+
+  // Hash dengan SHA-256 via SubtleCrypto
+  const enc = new TextEncoder();
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(parts));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  return hex;
+}
+
+const FP_STORE_KEY = 'ldFpData';
+
+async function initFingerprint() {
+  deviceFingerprint = await generateFingerprint();
+  const fpEl = document.getElementById('fpBadge');
+  const fpTxt = document.getElementById('fpText');
+
+  // Simpan ke localStorage: { fp: hash, codes: [list kode yang pernah dipakai] }
+  let stored = {};
+  try { stored = JSON.parse(localStorage.getItem(FP_STORE_KEY) || '{}'); } catch(e){}
+
+  const shortFp = deviceFingerprint.slice(0, 8).toUpperCase();
+
+  if (!stored.fp) {
+    stored = { fp: deviceFingerprint, codes: [] };
+    localStorage.setItem(FP_STORE_KEY, JSON.stringify(stored));
+  }
+
+  if (stored.fp !== deviceFingerprint) {
+    // Perangkat berbeda — reset (normal flow)
+    stored = { fp: deviceFingerprint, codes: [] };
+    localStorage.setItem(FP_STORE_KEY, JSON.stringify(stored));
+  }
+
+  fpTxt.textContent = 'Perangkat: ' + shortFp;
+  if (fpEl) fpEl.title = 'Device ID: ' + deviceFingerprint;
+}
+
+function isFpUsed(code) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(FP_STORE_KEY) || '{}');
+    if (stored.fp !== deviceFingerprint) return false;
+    return (stored.codes || []).includes(code);
+  } catch(e) { return false; }
+}
+
+function markFpUsed(code) {
+  try {
+    let stored = JSON.parse(localStorage.getItem(FP_STORE_KEY) || '{}');
+    if (!stored.codes) stored.codes = [];
+    if (!stored.codes.includes(code)) stored.codes.push(code);
+    localStorage.setItem(FP_STORE_KEY, JSON.stringify(stored));
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FITUR 3 — ENKRIPSI KODE di sessionStorage
+// ═══════════════════════════════════════════════════════════════
+const ENC_KEY = 'lDr4w$3cr3tK3y!';
+
+function xorEncrypt(text, key) {
+  let result = '';
+  for (let i = 0; i < text.length; i++) {
+    result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+  }
+  return btoa(result);
+}
+
+function xorDecrypt(encoded, key) {
+  try {
+    const text = atob(encoded);
+    let result = '';
+    for (let i = 0; i < text.length; i++) {
+      result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return result;
+  } catch(e) { return ''; }
+}
+
+// Override sessionUsed dengan versi terenkripsi
+const _sessionRaw = sessionStorage.getItem('sUsed');
+let _sessionDecoded = [];
+if (_sessionRaw) {
+  try {
+    // Coba decode terenkripsi dulu
+    const dec = xorDecrypt(_sessionRaw, ENC_KEY);
+    _sessionDecoded = JSON.parse(dec);
+    if (!Array.isArray(_sessionDecoded)) _sessionDecoded = [];
+  } catch(e) {
+    // Fallback ke plain JSON lama
+    try { _sessionDecoded = JSON.parse(_sessionRaw); } catch(e2) {}
+  }
+}
+// Re-override sessionUsed dengan data terenkripsi
+sessionUsed.clear();
+_sessionDecoded.forEach(c => sessionUsed.add(c));
+
+function markSession(code) {
+  sessionUsed.add(code);
+  const encrypted = xorEncrypt(JSON.stringify([...sessionUsed]), ENC_KEY);
+  sessionStorage.setItem('sUsed', encrypted);
+  markFpUsed(code); // juga tandai di fingerprint
+}
+
+function isSessionUsed(code) {
+  return sessionUsed.has(code) || isFpUsed(code);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FITUR 4 — GRAFIK STATISTIK ADMIN
+// ═══════════════════════════════════════════════════════════════
+async function loadAdminChart() {
+  const stats = await adminApiCall('get_stats');
+  const winners = await adminApiCall('get_winners');
+
+  // Donut chart: used vs available
+  if (stats.success) {
+    const total   = (stats.total_codes   || 0);
+    const used    = (stats.used_codes    || 0);
+    const avail   = (stats.available_codes || 0);
+    const circ    = 2 * Math.PI * 46; // 289 approx
+
+    if (total > 0) {
+      const usedPct  = used / total;
+      const availPct = avail / total;
+      const usedDash = (usedPct * circ).toFixed(1);
+      const availDash = (availPct * circ).toFixed(1);
+
+      const dUsed  = document.getElementById('donutUsed');
+      const dAvail = document.getElementById('donutAvail');
+      if (dUsed) {
+        dUsed.setAttribute('stroke-dasharray', usedDash + ' ' + circ);
+        dUsed.setAttribute('stroke-dashoffset', '0');
+      }
+      if (dAvail) {
+        const offset = -(usedPct * circ);
+        dAvail.setAttribute('stroke-dasharray', availDash + ' ' + circ);
+        dAvail.setAttribute('stroke-dashoffset', offset);
+      }
+      const pctEl = document.getElementById('donutPct');
+      if (pctEl) pctEl.textContent = Math.round(usedPct * 100) + '%';
+    }
+
+    // Ringkasan stats
+    const winnerCount = stats.total_winners || 0;
+    const convRate  = total > 0 ? Math.round((used/total)*100) : 0;
+    const winRate   = used > 0  ? Math.round((winnerCount/used)*100) : 0;
+    // Estimasi hari event (dari EVENT_END ke sekarang)
+    const daysRunning = Math.max(1, Math.ceil((EVENT_END - new Date('2026-03-01')) / (1000*60*60*24)));
+    const perDay = (used / daysRunning).toFixed(1);
+    const cr = document.getElementById('chartConvRate');
+    const wr = document.getElementById('chartWinRate');
+    const pd = document.getElementById('chartAvgPerDay');
+    if (cr) cr.textContent = convRate + '%';
+    if (wr) wr.textContent = winRate + '%';
+    if (pd) pd.textContent = perDay;
+  }
+
+  // Bar chart: distribusi hadiah dari winners
+  if (winners.success && winners.winners) {
+    const prizeCounts = {};
+    winners.winners.forEach(w => {
+      prizeCounts[w.prize] = (prizeCounts[w.prize] || 0) + 1;
+    });
+    const total = winners.winners.length || 1;
+    const sortedPrizes = Object.entries(prizeCounts).sort((a,b) => b[1]-a[1]);
+    const container = document.getElementById('prizeDistBars');
+    if (container) {
+      if (sortedPrizes.length === 0) {
+        container.innerHTML = '<div style="font-size:11px;color:var(--text-lt);text-align:center;padding:20px 0">Belum ada pemenang</div>';
+      } else {
+        container.innerHTML = sortedPrizes.map(([label, count]) => {
+          const pct = Math.round((count/total)*100);
+          const isGold = label.toLowerCase().includes('dana') || label.toLowerCase().includes('crocs');
+          return `<div class="chart-bar-row">
+            <div class="chart-bar-label"><span>${label}</span><span>${count} (${pct}%)</span></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill ${isGold?'gold':''}" style="width:${pct}%"></div></div>
+          </div>`;
+        }).join('');
+      }
+    }
+  }
+
+  // Bar chart: bobot hadiah (statis dari PRIZES config)
+  const weightContainer = document.getElementById('prizeWeightBars');
+  if (weightContainer) {
+    const maxW = Math.max(...PRIZES.map(p => p.weight));
+    weightContainer.innerHTML = PRIZES.map(p => {
+      const pct = maxW > 0 ? Math.round((p.weight/maxW)*100) : 0;
+      const isSpecial = p.weight === 0;
+      return `<div class="chart-bar-row">
+        <div class="chart-bar-label">
+          <span>${p.emoji} ${p.label}</span>
+          <span>${isSpecial ? 'Display' : 'W:'+p.weight}</span>
+        </div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill ${isSpecial?'red':''}" style="width:${isSpecial?5:pct}%"></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+}
+
+buildBoxes();
+buildPrizeList();
+renderUsedCodes();
+initCodes();
+loadLeaderboard();
+initFingerprint();
+
+// ─── ADMIN PANEL JAVASCRIPT ────────────────────────────────────
+let adminAllCodes = [];
+let adminAllWinners = [];
+ 
+function closeAdminPanel() {
+  document.getElementById('adminPanel').classList.remove('show');
+}
+ 
+function showAdminAlert(msg, type = 'success') {
+  const alert = document.getElementById('adminAlert');
+  alert.innerHTML = `<div class="admin-alert admin-alert-${type}">${msg}</div>`;
+  setTimeout(() => alert.innerHTML = '', 4000);
+}
+ 
+function switchAdminTab(tab, triggerEl) {
+  document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-btn').forEach(el => el.classList.remove('active'));
+  
+  document.getElementById('admin-' + tab).classList.add('active');
+  if (triggerEl) triggerEl.classList.add('active');
+  
+  if (tab === 'winners') loadAdminWinners();
+  if (tab === 'stats') loadAdminChart();
+}
+ 
+// API CALLS
+async function adminApiCall(action, params = {}) {
+  try {
+    const url = new URL(SCRIPT_URL);
+    url.searchParams.set('action', action);
+    for (let key in params) {
+      url.searchParams.set(key, params[key]);
+    }
+    const response = await fetch(url.toString(), { redirect: 'follow' });
+    const data = await response.json();
+    return data;
+  } catch(err) {
+    console.error('API Error:', err);
+    showAdminAlert('❌ Error: ' + err.message, 'error');
+    return { success: false };
+  }
+}
+ 
+// LOAD DATA
+async function loadAdminStats() {
+  const data = await adminApiCall('get_stats');
+  if (data.success) {
+    document.getElementById('adminStatTotal').textContent = data.total_codes || 0;
+    document.getElementById('adminStatAvail').textContent = data.available_codes || 0;
+    document.getElementById('adminStatUsed').textContent = data.used_codes || 0;
+    document.getElementById('adminStatWinners').textContent = data.total_winners || 0;
+  }
+}
+ 
+async function loadAdminCodes() {
+  const data = await adminApiCall('get_codes');
+  if (data.success) {
+    adminAllCodes = data.codes || [];
+    renderAdminCodes();
+  }
+}
+ 
+async function loadAdminWinners() {
+  const data = await adminApiCall('get_winners');
+  if (data.success) {
+    adminAllWinners = data.winners || [];
+    renderAdminWinners();
+  }
+}
+ 
+// RENDER
+function renderAdminCodes() {
+  const tbody = document.getElementById('adminCodesTable');
+  const search = (document.getElementById('adminSearchCodes')?.value || '').toUpperCase();
+  
+  let filtered = adminAllCodes.filter(c => c.code.toUpperCase().includes(search));
+  
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="admin-empty"><div class="admin-empty-icon">📭</div>No codes found</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = filtered.map(c => `
+    <tr>
+      <td><strong>${c.code}</strong></td>
+      <td><span class="admin-badge admin-badge-${c.status}">${c.status === 'available' ? '✅ Available' : '❌ Used'}</span></td>
+      <td>${c.prize || '—'}</td>
+      <td>${c.winner || '—'}</td>
+      <td>${c.status === 'available' ? `<button class="admin-btn-small" onclick="adminDeleteCode('${c.code}')">🗑️ Delete</button>` : '—'}</td>
+    </tr>
+  `).join('');
+}
+ 
+function renderAdminWinners() {
+  const tbody = document.getElementById('adminWinnersTable');
+  const search = (document.getElementById('adminSearchWinners')?.value || '').toUpperCase();
+  
+  let filtered = adminAllWinners.filter(w => w.code.toUpperCase().includes(search) || (w.winner && w.winner.toUpperCase().includes(search)));
+  
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" class="admin-empty"><div class="admin-empty-icon">🏆</div>No winners yet</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = filtered.map(w => `
+    <tr>
+      <td><strong>${w.code}</strong></td>
+      <td>${w.prize || '—'}</td>
+      <td>${w.winner || '—'}</td>
+      <td>${w.date_won || '—'}</td>
+    </tr>
+  `).join('');
+}
+ 
+function filterAdminCodes() {
+  renderAdminCodes();
+}
+ 
+function filterAdminWinners() {
+  renderAdminWinners();
+}
+ 
+// ADD CODES - Validasi 8 digit angka
+async function adminAddCodes() {
+  const input = document.getElementById('adminCodesInput').value.trim();
+  if (!input) {
+    showAdminAlert('⚠️ Masukkan kode terlebih dahulu', 'error');
+    return;
+  }
+  
+  let codes = input.split(/[\n,|]+/).map(c => c.trim()).filter(c => c);
+  
+  // Validasi format: harus 8 digit angka
+  const invalidCodes = codes.filter(c => !/^\d{8}$/.test(c));
+  if (invalidCodes.length > 0) {
+    showAdminAlert(`⚠️ Kode harus 8 digit angka! Invalid: ${invalidCodes.slice(0,3).join(', ')}${invalidCodes.length > 3 ? '...' : ''}`, 'error');
+    return;
+  }
+  
+  if (codes.length === 0) {
+    showAdminAlert('⚠️ No valid codes', 'error');
+    return;
+  }
+  
+  const result = await adminApiCall('add_codes', { codes: codes.join('|') });
+  if (result.success) {
+    showAdminAlert(`✅ ${result.added} kode berhasil ditambahkan`, 'success');
+    document.getElementById('adminCodesInput').value = '';
+    loadAdminCodes();
+    loadAdminStats();
+  }
+}
+ 
+async function adminAddSample() {
+  // Generate 10 kode sample 8 digit
+  const codes = [];
+  for (let i = 0; i < 10; i++) {
+    codes.push(String(Math.floor(10000000 + Math.random() * 90000000)));
+  }
+  const result = await adminApiCall('add_codes', { codes: codes.join('|') });
+  if (result.success) {
+    showAdminAlert(`✅ 10 kode sample ditambahkan`, 'success');
+    loadAdminCodes();
+    loadAdminStats();
+  }
+}
+ 
+async function adminAddRandom() {
+  // Generate 20 kode random 8 digit
+  const codes = [];
+  for (let i = 0; i < 20; i++) {
+    codes.push(String(Math.floor(10000000 + Math.random() * 90000000)));
+  }
+  
+  const result = await adminApiCall('add_codes', { codes: codes.join('|') });
+  if (result.success) {
+    showAdminAlert(`✅ 20 kode random 8-digit ditambahkan`, 'success');
+    loadAdminCodes();
+    loadAdminStats();
+  }
+}
+ 
+// DELETE CODE
+async function adminDeleteCode(code) {
+  if (!confirm(`Hapus kode "${code}"?`)) return;
+  
+  const result = await adminApiCall('delete_code', { code: code });
+  if (result.success) {
+    showAdminAlert('✅ Kode dihapus', 'success');
+    loadAdminCodes();
+    loadAdminStats();
+  }
+}
+ 
+// RESET ALL
+async function adminConfirmReset() {
+  if (!confirm('⚠️ Hapus SEMUA data? Tidak bisa dibatalkan!')) return;
+  if (!confirm('⚠️ Anda YAKIN?')) return;
+  
+  const result = await adminApiCall('reset_all');
+  if (result.success) {
+    showAdminAlert('✅ Semua data direset', 'success');
+    loadAdminCodes();
+    loadAdminStats();
+    loadAdminWinners();
+  }
+}
+ 
+// UPDATE TRIGGER FUNCTION - mengarah ke custom login modal
+function openAdminLogin() {
+  document.getElementById('adminLoginOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('adminPwInput').focus(), 100);
+}
+
+// Setelah login berhasil, buka panel admin
+function openAdminPanel() {
+  document.getElementById('adminPanel').classList.add('show');
+  loadAdminStats();
+  loadAdminCodes();
+  loadAdminChart();
+}
+
+</script>
+</body>
+</html>
