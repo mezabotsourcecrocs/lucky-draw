@@ -2705,23 +2705,19 @@ function updateAnnPreview() {
     : 'Ketik teks di atas untuk melihat preview...';
 }
 
-// Muat pengumuman dari API (action: get_announcement)
-// Fallback: simpan di localStorage jika API belum support
+// Muat pengumuman dari server (API utama)
+// Tidak lagi bergantung pada localStorage
 async function loadAnnouncement() {
   try {
     const data = await apiCall({ action: 'get_announcement' });
     if (data.success && data.text && data.text.trim()) {
       showAnnouncementBar(data.icon || '📢', data.text);
-      return;
+      // Hapus localStorage lama agar tidak confusing
+      localStorage.removeItem('luckydraw_announcement');
     }
-  } catch(e) {}
-  // Fallback localStorage
-  const saved = localStorage.getItem('luckydraw_announcement');
-  if (saved) {
-    try {
-      const obj = JSON.parse(saved);
-      if (obj.text && obj.text.trim()) showAnnouncementBar(obj.icon || '📢', obj.text);
-    } catch(e) {}
+    // Jika data.text kosong = tidak ada pengumuman aktif, tidak perlu tampil
+  } catch(e) {
+    console.warn('Gagal ambil announcement dari server:', e);
   }
 }
 
@@ -2739,29 +2735,29 @@ function dismissAnnouncement() {
   document.getElementById('announcementBar').classList.remove('show');
 }
 
-// Admin: update preview status saat tab dibuka
-function loadAnnouncementAdminStatus() {
-  const saved = localStorage.getItem('luckydraw_announcement');
-  const dot   = document.getElementById('annStatusDot');
-  const txt   = document.getElementById('annStatusText');
+// Admin: update preview status saat tab dibuka — ambil dari server
+async function loadAnnouncementAdminStatus() {
+  const dot = document.getElementById('annStatusDot');
+  const txt = document.getElementById('annStatusText');
   if (!dot || !txt) return;
-  if (saved) {
-    try {
-      const obj = JSON.parse(saved);
-      if (obj.text) {
-        dot.classList.add('active');
-        txt.textContent = `Aktif: "${obj.text.slice(0, 60)}${obj.text.length > 60 ? '...' : ''}"`;
-        document.getElementById('annTextInput').value  = obj.text;
-        currentAnnIcon = obj.icon || '📢';
-        // Highlight icon button yang aktif
-        document.querySelectorAll('.ann-type-btn').forEach(b => {
-          b.classList.toggle('selected', b.textContent.startsWith(currentAnnIcon));
-        });
-        updateAnnPreview();
-        return;
-      }
-    } catch(e) {}
+
+  try {
+    const data = await apiCall({ action: 'get_announcement' });
+    if (data.success && data.text && data.text.trim()) {
+      dot.classList.add('active');
+      txt.textContent = `Aktif: "${data.text.slice(0, 60)}${data.text.length > 60 ? '...' : ''}"`;
+      document.getElementById('annTextInput').value = data.text;
+      currentAnnIcon = data.icon || '📢';
+      document.querySelectorAll('.ann-type-btn').forEach(b => {
+        b.classList.toggle('selected', b.textContent.startsWith(currentAnnIcon));
+      });
+      updateAnnPreview();
+      return;
+    }
+  } catch(e) {
+    console.warn('Gagal ambil status announcement:', e);
   }
+
   dot.classList.remove('active');
   txt.textContent = 'Tidak ada pengumuman aktif';
 }
@@ -2770,38 +2766,44 @@ async function adminPublishAnnouncement() {
   const text = document.getElementById('annTextInput').value.trim();
   if (!text) { showAdminAlert('⚠️ Isi teks pengumuman terlebih dahulu', 'error'); return; }
 
-  const annObj = { icon: currentAnnIcon, text };
+  // Tampilkan loading
+  showAdminAlert('⏳ Menyimpan pengumuman ke server...', 'success');
 
-  // Simpan ke localStorage (langsung aktif untuk semua tab browser yang sama)
-  localStorage.setItem('luckydraw_announcement', JSON.stringify(annObj));
-
-  // Coba kirim ke API juga (jika Apps Script sudah support)
   try {
-    await apiCall({ action: 'set_announcement', icon: currentAnnIcon, text });
-  } catch(e) {}
+    const result = await apiCall({ action: 'set_announcement', icon: currentAnnIcon, text });
+    if (!result.success) throw new Error(result.error || 'Gagal simpan');
 
-  // Tampilkan langsung di halaman
-  showAnnouncementBar(currentAnnIcon, text);
-  loadAnnouncementAdminStatus();
-  showAdminAlert('✅ Pengumuman berhasil dipublikasikan!', 'success');
+    // Hapus localStorage lama agar tidak conflict
+    localStorage.removeItem('luckydraw_announcement');
+
+    // Tampilkan langsung di halaman
+    showAnnouncementBar(currentAnnIcon, text);
+    await loadAnnouncementAdminStatus();
+    showAdminAlert('✅ Pengumuman berhasil dipublikasikan ke semua pengguna!', 'success');
+  } catch(e) {
+    showAdminAlert('❌ Gagal menyimpan ke server: ' + e.message, 'error');
+  }
 }
 
 async function adminRemoveAnnouncement() {
   if (!confirm('Hapus pengumuman yang sedang aktif?')) return;
 
-  localStorage.removeItem('luckydraw_announcement');
+  showAdminAlert('⏳ Menghapus pengumuman...', 'success');
 
   try {
-    await apiCall({ action: 'remove_announcement' });
-  } catch(e) {}
+    const result = await apiCall({ action: 'remove_announcement' });
+    if (!result.success) throw new Error(result.error || 'Gagal hapus');
 
-  dismissAnnouncement();
-  document.getElementById('annTextInput').value = '';
-  updateAnnPreview();
-  loadAnnouncementAdminStatus();
-  showAdminAlert('✅ Pengumuman dihapus', 'success');
+    localStorage.removeItem('luckydraw_announcement');
+    dismissAnnouncement();
+    document.getElementById('annTextInput').value = '';
+    updateAnnPreview();
+    await loadAnnouncementAdminStatus();
+    showAdminAlert('✅ Pengumuman berhasil dihapus!', 'success');
+  } catch(e) {
+    showAdminAlert('❌ Gagal menghapus dari server: ' + e.message, 'error');
+  }
 }
-
 // ─── LIVE WINNER FEED ──────────────────────────────────────
 function showWinnerToast(nama, prize) {
   const feed = document.getElementById('winnerFeed');
