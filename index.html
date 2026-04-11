@@ -2712,10 +2712,8 @@ async function loadAnnouncement() {
     const data = await apiCall({ action: 'get_announcement' });
     if (data.success && data.text && data.text.trim()) {
       showAnnouncementBar(data.icon || '📢', data.text);
-      // Hapus localStorage lama agar tidak confusing
       localStorage.removeItem('luckydraw_announcement');
     }
-    // Jika data.text kosong = tidak ada pengumuman aktif, tidak perlu tampil
   } catch(e) {
     console.warn('Gagal ambil announcement dari server:', e);
   }
@@ -2766,17 +2764,13 @@ async function adminPublishAnnouncement() {
   const text = document.getElementById('annTextInput').value.trim();
   if (!text) { showAdminAlert('⚠️ Isi teks pengumuman terlebih dahulu', 'error'); return; }
 
-  // Tampilkan loading
   showAdminAlert('⏳ Menyimpan pengumuman ke server...', 'success');
 
   try {
     const result = await apiCall({ action: 'set_announcement', icon: currentAnnIcon, text });
     if (!result.success) throw new Error(result.error || 'Gagal simpan');
 
-    // Hapus localStorage lama agar tidak conflict
     localStorage.removeItem('luckydraw_announcement');
-
-    // Tampilkan langsung di halaman
     showAnnouncementBar(currentAnnIcon, text);
     await loadAnnouncementAdminStatus();
     showAdminAlert('✅ Pengumuman berhasil dipublikasikan ke semua pengguna!', 'success');
@@ -2804,6 +2798,7 @@ async function adminRemoveAnnouncement() {
     showAdminAlert('❌ Gagal menghapus dari server: ' + e.message, 'error');
   }
 }
+
 // ─── LIVE WINNER FEED ──────────────────────────────────────
 function showWinnerToast(nama, prize) {
   const feed = document.getElementById('winnerFeed');
@@ -3050,10 +3045,12 @@ function renderAdminCodes() {
   const search = (document.getElementById('adminSearchCodes')?.value || '').toUpperCase();
 
   // Filter data valid dulu (pastikan c.code adalah string)
-  const validCodes = adminAllCodes.filter(c => c && typeof c.code === 'string');
+  // CATATAN: nama variabel sengaja diganti jadi adminValidCodes agar tidak bentrok
+  // dengan variabel global validCodes (Set kode pengguna aktif)
+  const adminValidCodes = adminAllCodes.filter(c => c && typeof c.code === 'string');
   let filtered = search
-    ? validCodes.filter(c => c.code.toUpperCase().includes(search))
-    : validCodes;
+    ? adminValidCodes.filter(c => c.code.toUpperCase().includes(search))
+    : adminValidCodes;
 
   if (filtered.length === 0) {
     tbody.innerHTML = '<tr><td colspan="5" class="admin-empty"><div class="admin-empty-icon">📭</div>No codes found</td></tr>';
