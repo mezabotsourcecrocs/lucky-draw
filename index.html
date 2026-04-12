@@ -3187,25 +3187,77 @@ function renderAnnActiveList() {
   }).join('');
 }
 
-// Simpan ke localStorage
-function _saveAnnList() {
-  localStorage.setItem('luckydraw_announcements', JSON.stringify(annList));
+// ── Simpan daftar pengumuman ke SERVER (bukan localStorage) ──
+async function _saveAnnList() {
+  // Simpan seluruh annList sebagai JSON string ke server
+  const payload = JSON.stringify(annList);
+  try {
+    await apiCall({ action: 'set_announcement', icon: annIcon, text: payload, title: '__ANNLIST__', theme: annTheme });
+  } catch(e) {
+    console.warn('Gagal simpan annList ke server:', e);
+  }
+  // Hapus localStorage lama agar tidak confusing
+  localStorage.removeItem('luckydraw_announcements');
 }
 
-// Load dari localStorage
-function loadAnnouncement() {
+// ── Load pengumuman dari SERVER ──
+async function loadAnnouncement() {
   try {
-    const raw = localStorage.getItem('luckydraw_announcements');
-    if (raw) annList = JSON.parse(raw);
-  } catch(e) { annList = []; }
+    const data = await apiCall({ action: 'get_announcement' });
+    if (data.success && data.text && data.text.trim()) {
+      // Cek apakah ini format annList baru atau format lama (plain text)
+      if (data.title === '__ANNLIST__') {
+        try { annList = JSON.parse(data.text); } catch(e) { annList = []; }
+      } else if (data.text) {
+        // Format lama: buat satu announcement dari icon+text
+        annList = [{
+          id: 'legacy',
+          theme: 'info',
+          icon: data.icon || '📢',
+          title: '',
+          text: data.text,
+          pinned: false,
+          marquee: false,
+          time: '',
+        }];
+      }
+    } else {
+      annList = [];
+    }
+  } catch(e) {
+    console.warn('Gagal load announcement dari server:', e);
+    annList = [];
+  }
+  localStorage.removeItem('luckydraw_announcements');
   renderAnnStack();
 }
 
-function loadAnnouncementAdminStatus() {
+// ── Load status admin dari SERVER ──
+async function loadAnnouncementAdminStatus() {
   try {
-    const raw = localStorage.getItem('luckydraw_announcements');
-    if (raw) annList = JSON.parse(raw);
-  } catch(e) { annList = []; }
+    const data = await apiCall({ action: 'get_announcement' });
+    if (data.success && data.text && data.text.trim()) {
+      if (data.title === '__ANNLIST__') {
+        try { annList = JSON.parse(data.text); } catch(e) { annList = []; }
+      } else if (data.text) {
+        annList = [{
+          id: 'legacy',
+          theme: 'info',
+          icon: data.icon || '📢',
+          title: '',
+          text: data.text,
+          pinned: false,
+          marquee: false,
+          time: '',
+        }];
+      }
+    } else {
+      annList = [];
+    }
+  } catch(e) {
+    console.warn('Gagal load status announcement:', e);
+    annList = [];
+  }
   renderAnnActiveList();
   updateAnnPreview();
 }
@@ -3214,6 +3266,8 @@ async function adminPublishAnnouncement() {
   const title  = document.getElementById('annTitleInput').value.trim();
   const text   = document.getElementById('annTextInput').value.trim();
   if (!text) { showAdminAlert('⚠️ Isi teks pengumuman terlebih dahulu', 'error'); return; }
+
+  showAdminAlert('⏳ Menyimpan ke server...', 'success');
 
   const now = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
   const ann = {
@@ -3227,8 +3281,20 @@ async function adminPublishAnnouncement() {
     time:    now,
   };
 
-  annList.unshift(ann); // taruh di atas
-  _saveAnnList();
+  annList.unshift(ann);
+
+  // Simpan ke server
+  const payload = JSON.stringify(annList);
+  try {
+    const result = await apiCall({ action: 'set_announcement', icon: annIcon, text: payload, title: '__ANNLIST__', theme: annTheme });
+    if (!result.success) throw new Error(result.error || 'Gagal simpan');
+  } catch(e) {
+    annList.shift(); // rollback
+    showAdminAlert('❌ Gagal menyimpan ke server: ' + e.message, 'error');
+    return;
+  }
+
+  localStorage.removeItem('luckydraw_announcements');
   renderAnnStack();
   renderAnnActiveList();
 
@@ -3238,15 +3304,23 @@ async function adminPublishAnnouncement() {
   updateCharCount();
   updateAnnPreview();
 
-  showAdminAlert('✅ Pengumuman berhasil dipublikasikan!', 'success');
-
-  // Kirim ke API juga (opsional)
-  try { await apiCall({ action: 'set_announcement', icon: annIcon, text, title, theme: annTheme }); } catch(e) {}
+  showAdminAlert('✅ Pengumuman berhasil dipublikasikan ke semua pengguna!', 'success');
 }
 
-function adminDeleteAnnouncement(id) {
+async function adminDeleteAnnouncement(id) {
   annList = annList.filter(a => a.id !== id);
-  _saveAnnList();
+
+  // Simpan list yang sudah dikurangi ke server
+  const payload = JSON.stringify(annList);
+  try {
+    if (annList.length > 0) {
+      await apiCall({ action: 'set_announcement', icon: annIcon, text: payload, title: '__ANNLIST__', theme: annTheme });
+    } else {
+      await apiCall({ action: 'remove_announcement' });
+    }
+  } catch(e) { console.warn('Gagal hapus ann dari server:', e); }
+
+  localStorage.removeItem('luckydraw_announcements');
   dismissAnnouncement(id);
   renderAnnActiveList();
 }
@@ -3254,11 +3328,15 @@ function adminDeleteAnnouncement(id) {
 async function adminClearAllAnnouncements() {
   if (!confirm('Hapus semua pengumuman?')) return;
   annList = [];
-  _saveAnnList();
+
+  try {
+    await apiCall({ action: 'remove_announcement' });
+  } catch(e) { console.warn('Gagal clear ann dari server:', e); }
+
+  localStorage.removeItem('luckydraw_announcements');
   renderAnnStack();
   renderAnnActiveList();
   showAdminAlert('✅ Semua pengumuman dihapus', 'success');
-  try { await apiCall({ action: 'remove_announcement' }); } catch(e) {}
 }
 
 // Alias lama agar tidak crash jika masih ada pemanggilan
