@@ -922,121 +922,387 @@ h1 span {
 .leaderboard-empty-icon { font-size: 2rem; margin-bottom: 8px; }
 
 /* ─── ANNOUNCEMENT BANNER ───────────────────────────────── */
-.announcement-bar {
-  display: none;
-  position: relative;
-  background: linear-gradient(135deg, var(--green-dark), var(--green));
-  border-radius: 14px;
-  padding: 14px 44px 14px 18px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 16px rgba(46,125,50,0.2);
-  animation: fadeDown 0.5s ease both;
-  border: 1px solid rgba(255,215,0,0.25);
-}
-.announcement-bar.show { display: block; }
-.announcement-bar-inner {
+/* ─── ANNOUNCEMENT SYSTEM ───────────────────────────────── */
+.ann-stack {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
 }
-.announcement-icon {
-  font-size: 1.2rem;
+
+.announcement-bar {
+  position: relative;
+  border-radius: 14px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  animation: annSlideIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+@keyframes annSlideIn {
+  from { opacity:0; transform:translateY(-12px) scale(0.97); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes annSlideOut {
+  to { opacity:0; transform:translateY(-8px) scale(0.96); max-height:0; margin:0; padding:0; }
+}
+.announcement-bar.dismissing { animation: annSlideOut 0.3s ease forwards; }
+
+/* Tema warna */
+.announcement-bar.theme-info    { background: linear-gradient(135deg, #1B5E20, #2E7D32); }
+.announcement-bar.theme-warning { background: linear-gradient(135deg, #E65100, #F57C00); }
+.announcement-bar.theme-success { background: linear-gradient(135deg, #1565C0, #1976D2); }
+.announcement-bar.theme-urgent  { background: linear-gradient(135deg, #B71C1C, #C62828); }
+.announcement-bar.theme-gold    { background: linear-gradient(135deg, #4A3728, #7B5E37); border-color: rgba(255,215,0,0.3); }
+.announcement-bar.theme-purple  { background: linear-gradient(135deg, #4A148C, #6A1B9A); }
+
+/* Label tipe di kiri atas */
+.ann-type-tag {
+  position: absolute;
+  top: 0; left: 0;
+  padding: 3px 10px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  background: rgba(0,0,0,0.15);
+  border-radius: 14px 0 8px 0;
+}
+
+.ann-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 46px 14px 16px;
+  padding-top: 22px;
+}
+
+.ann-icon-wrap {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
   flex-shrink: 0;
-  margin-top: 1px;
 }
-.announcement-text {
+
+.ann-body { flex: 1; min-width: 0; }
+.ann-title-line {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.ann-text-line {
   font-size: 13px;
   font-weight: 500;
   color: #fff;
-  line-height: 1.6;
+  line-height: 1.55;
   white-space: pre-wrap;
   word-break: break-word;
 }
-.announcement-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  font-size: 12px;
-  cursor: pointer;
+
+/* Marquee untuk teks panjang */
+.ann-marquee-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ann-marquee-inner {
+  display: inline-block;
+  animation: marqueeScroll 18s linear infinite;
+  padding-right: 60px;
+}
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ann-meta {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  line-height: 1;
+  gap: 8px;
+  margin-top: 5px;
 }
-.announcement-close:hover { background: rgba(255,255,255,0.3); }
+.ann-time {
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
+}
+.ann-pinned-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255,215,0,0.25);
+  color: #FFD700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,215,0,0.3);
+}
 
-/* ─── ADMIN ANNOUNCEMENT TAB ────────────────────────────── */
-.ann-preview {
-  background: linear-gradient(135deg, var(--green-dark), var(--green));
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-top: 12px;
-  color: white;
-  font-size: 13px;
-  line-height: 1.6;
-  min-height: 48px;
-  white-space: pre-wrap;
-  word-break: break-word;
-  border: 1px solid rgba(255,215,0,0.2);
+.ann-close {
+  position: absolute;
+  top: 50%; right: 10px;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: rgba(255,255,255,0.7);
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
 }
-.ann-preview-label {
+.ann-close:hover { background: rgba(255,255,255,0.25); color: white; }
+/* Pinned tidak bisa ditutup user */
+.announcement-bar.pinned .ann-close { display: none; }
+
+/* ─── ADMIN ANNOUNCEMENT TAB (UPGRADED) ─────────────────── */
+.ann-admin-section {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.ann-admin-section:last-child { border-bottom: none; margin-bottom: 0; }
+.ann-admin-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ann-admin-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Tema picker grid */
+.ann-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.ann-theme-swatch {
+  border-radius: 10px;
+  padding: 10px 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  position: relative;
+}
+.ann-theme-swatch.theme-info    { background: linear-gradient(135deg, #1B5E20, #2E7D32); }
+.ann-theme-swatch.theme-warning { background: linear-gradient(135deg, #E65100, #F57C00); }
+.ann-theme-swatch.theme-success { background: linear-gradient(135deg, #1565C0, #1976D2); }
+.ann-theme-swatch.theme-urgent  { background: linear-gradient(135deg, #B71C1C, #C62828); }
+.ann-theme-swatch.theme-gold    { background: linear-gradient(135deg, #4A3728, #7B5E37); }
+.ann-theme-swatch.theme-purple  { background: linear-gradient(135deg, #4A148C, #6A1B9A); }
+.ann-theme-swatch.selected { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(255,215,0,0.4); }
+.ann-theme-swatch:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.ann-theme-swatch-emoji { font-size: 1.2rem; }
+.ann-theme-swatch-label { font-size: 10px; opacity: 0.85; }
+.ann-theme-check {
+  position: absolute; top: 4px; right: 4px;
+  width: 14px; height: 14px;
+  background: var(--gold); border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+  font-size: 8px; color: #333;
+}
+.ann-theme-swatch.selected .ann-theme-check { display: flex; }
+
+/* Char counter */
+.ann-char-counter {
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-lt);
+  margin-top: 4px;
+  transition: color 0.2s;
+}
+.ann-char-counter.warn { color: #E65100; font-weight: 700; }
+
+/* Template chips */
+.ann-template-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ann-tpl-chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ann-tpl-chip:hover { border-color: var(--green-mid); color: var(--green-dark); background: rgba(46,125,50,0.05); }
+
+/* Options row */
+.ann-options-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: var(--cream);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.ann-opt-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-mid);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+.ann-opt-toggle {
+  width: 32px; height: 18px;
+  border-radius: 9px;
+  background: var(--border);
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.ann-opt-toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: white;
+  top: 2px; left: 2px;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.ann-opt-toggle.on { background: var(--green-mid); }
+.ann-opt-toggle.on::after { transform: translateX(14px); }
+
+/* Active announcements list */
+.ann-active-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ann-active-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.ann-active-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green-mid);
+  flex-shrink: 0;
+  animation: pulse 1.5s infinite;
+}
+.ann-active-preview {
+  flex: 1;
+  font-size: 12px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ann-active-theme-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: white;
+  flex-shrink: 0;
+}
+.ann-active-del {
+  background: rgba(200,50,50,0.08);
+  border: 1px solid rgba(200,50,50,0.2);
+  color: #C03030;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.ann-active-del:hover { background: rgba(200,50,50,0.15); }
+.ann-empty-list {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-lt);
+  font-size: 12px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+}
+
+/* Live preview upgrade */
+.ann-preview-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.ann-preview-header {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-lt);
-  margin-bottom: 6px;
-}
-.ann-status {
+  padding: 8px 12px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 10px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: rgba(46,125,50,0.06);
-  border: 1px solid var(--border);
-  color: var(--text-mid);
+  gap: 6px;
 }
-.ann-status-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--text-lt);
-  flex-shrink: 0;
+.ann-preview-body {
+  padding: 0;
 }
-.ann-status-dot.active { background: var(--green-mid); animation: pulse 1.5s infinite; }
-.ann-type-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.ann-type-btn {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border);
-  background: transparent;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: var(--text-mid);
-}
-.ann-type-btn.selected {
-  background: var(--green-dark);
-  color: white;
-  border-color: var(--green-dark);
+.ann-preview-live {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
 }
 
+
+
+/* ann-type-btn untuk icon picker */
+.ann-type-btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.ann-type-btn.selected { background: var(--green-dark); border-color: var(--green-dark); transform: scale(1.15); }
+.ann-type-btn:hover { border-color: var(--green-mid); transform: scale(1.08); }
 
 @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
 @keyframes fadeUp   { from { opacity:0; transform:translateY(20px);  } to { opacity:1; transform:translateY(0); } }
@@ -1696,14 +1962,8 @@ h1 span {
     <div class="header-divider"></div>
   </div>
 
-  <!-- ANNOUNCEMENT BANNER -->
-  <div class="announcement-bar" id="announcementBar">
-    <div class="announcement-bar-inner">
-      <span class="announcement-icon" id="announcementIcon">📢</span>
-      <span class="announcement-text" id="announcementText"></span>
-    </div>
-    <button class="announcement-close" onclick="dismissAnnouncement()" title="Tutup">✕</button>
-  </div>
+  <!-- ANNOUNCEMENT STACK -->
+  <div class="ann-stack" id="annStack"></div>
 
   <div class="countdown-bar" id="countdownBar">
     <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);font-weight:600;">Event berakhir dalam</span>
@@ -1862,36 +2122,131 @@ h1 span {
       </div>
  
       <!-- TAB: ANNOUNCEMENT -->
+      <!-- TAB: ANNOUNCEMENT -->
       <div id="admin-announcement" class="admin-tab-content">
 
-        <div class="admin-form-group">
-          <label>Ikon Pengumuman</label>
-          <div class="ann-type-row" id="annIconRow">
-            <button class="ann-type-btn selected" onclick="selectAnnIcon('📢', this)">📢 Info</button>
-            <button class="ann-type-btn" onclick="selectAnnIcon('⚠️', this)">⚠️ Peringatan</button>
-            <button class="ann-type-btn" onclick="selectAnnIcon('🎉', this)">🎉 Selebrasi</button>
-            <button class="ann-type-btn" onclick="selectAnnIcon('🍀', this)">🍀 Event</button>
-            <button class="ann-type-btn" onclick="selectAnnIcon('🎁', this)">🎁 Hadiah</button>
-            <button class="ann-type-btn" onclick="selectAnnIcon('🕐', this)">🕐 Waktu</button>
+        <!-- SECTION 1: Buat Pengumuman -->
+        <div class="ann-admin-section">
+          <div class="ann-admin-section-title">✏️ Buat Pengumuman</div>
+
+          <!-- Tema -->
+          <div class="admin-form-group">
+            <label>Tema Warna</label>
+            <div class="ann-theme-grid" id="annThemeGrid">
+              <div class="ann-theme-swatch theme-info selected" onclick="selectAnnTheme('info', this)">
+                <div class="ann-theme-check">✓</div>
+                <span class="ann-theme-swatch-emoji">📢</span>
+                <span class="ann-theme-swatch-label">Info</span>
+              </div>
+              <div class="ann-theme-swatch theme-warning" onclick="selectAnnTheme('warning', this)">
+                <div class="ann-theme-check">✓</div>
+                <span class="ann-theme-swatch-emoji">⚠️</span>
+                <span class="ann-theme-swatch-label">Peringatan</span>
+              </div>
+              <div class="ann-theme-swatch theme-urgent" onclick="selectAnnTheme('urgent', this)">
+                <div class="ann-theme-check">✓</div>
+                <span class="ann-theme-swatch-emoji">🚨</span>
+                <span class="ann-theme-swatch-label">Urgent</span>
+              </div>
+              <div class="ann-theme-swatch theme-success" onclick="selectAnnTheme('success', this)">
+                <div class="ann-theme-check">✓</div>
+                <span class="ann-theme-swatch-emoji">🎉</span>
+                <span class="ann-theme-swatch-label">Selebrasi</span>
+              </div>
+              <div class="ann-theme-swatch theme-gold" onclick="selectAnnTheme('gold', this)">
+                <div class="ann-theme-check">✓</div>
+                <span class="ann-theme-swatch-emoji">🏆</span>
+                <span class="ann-theme-swatch-label">Hadiah</span>
+              </div>
+              <div class="ann-theme-swatch theme-purple" onclick="selectAnnTheme('purple', this)">
+                <div class="ann-theme-check">✓</div>
+                <span class="ann-theme-swatch-emoji">🍀</span>
+                <span class="ann-theme-swatch-label">Event</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ikon kustom -->
+          <div class="admin-form-group">
+            <label>Ikon (emoji)</label>
+            <div class="ann-type-row" id="annIconRow">
+              <button class="ann-type-btn selected" onclick="selectAnnIcon('📢', this)">📢</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('⚠️', this)">⚠️</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('🚨', this)">🚨</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('🎉', this)">🎉</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('🏆', this)">🏆</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('🍀', this)">🍀</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('🎁', this)">🎁</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('🕐', this)">🕐</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('📌', this)">📌</button>
+              <button class="ann-type-btn" onclick="selectAnnIcon('💬', this)">💬</button>
+            </div>
+          </div>
+
+          <!-- Judul (opsional) -->
+          <div class="admin-form-group">
+            <label>Judul <span style="font-weight:400;color:var(--text-lt)">(opsional)</span></label>
+            <input type="text" id="annTitleInput" placeholder="Contoh: Pengumuman Penting" maxlength="60" oninput="updateAnnPreview()" style="width:100%;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;color:var(--text);outline:none;font-family:'DM Sans',sans-serif;transition:all 0.2s;" onfocus="this.style.borderColor='var(--green-mid)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+
+          <!-- Teks -->
+          <div class="admin-form-group">
+            <label>Teks Pengumuman</label>
+            <textarea id="annTextInput" placeholder="Ketik pesan pengumuman di sini..." style="min-height:90px;" maxlength="300" oninput="updateAnnPreview(); updateCharCount()"></textarea>
+            <div class="ann-char-counter" id="annCharCounter">0 / 300</div>
+          </div>
+
+          <!-- Template cepat -->
+          <div class="admin-form-group">
+            <label>Template Cepat</label>
+            <div class="ann-template-row">
+              <span class="ann-tpl-chip" onclick="applyTemplate('klaim')">🏪 Info Klaim</span>
+              <span class="ann-tpl-chip" onclick="applyTemplate('habis')">⚠️ Stok Habis</span>
+              <span class="ann-tpl-chip" onclick="applyTemplate('winner')">🏆 Pemenang</span>
+              <span class="ann-tpl-chip" onclick="applyTemplate('tutup')">🕐 Jam Tutup</span>
+              <span class="ann-tpl-chip" onclick="applyTemplate('selamat')">🎉 Selamat</span>
+              <span class="ann-tpl-chip" onclick="applyTemplate('maintenance')">🔧 Maintenance</span>
+            </div>
+          </div>
+
+          <!-- Opsi -->
+          <div class="admin-form-group">
+            <div class="ann-options-row">
+              <label class="ann-opt-label" onclick="toggleAnnOpt('pinned')">
+                <div class="ann-opt-toggle" id="opt-pinned"></div>
+                📌 Pin (tidak bisa ditutup pengguna)
+              </label>
+              <label class="ann-opt-label" onclick="toggleAnnOpt('marquee')">
+                <div class="ann-opt-toggle" id="opt-marquee"></div>
+                ↔ Teks berjalan
+              </label>
+            </div>
+          </div>
+
+          <!-- Preview live -->
+          <div class="ann-preview-wrap">
+            <div class="ann-preview-header">
+              👁 Preview Tampilan
+            </div>
+            <div class="ann-preview-body" id="annPreviewBody">
+              <!-- diisi JS -->
+            </div>
+          </div>
+
+          <div class="admin-btn-group" style="margin-top:16px;">
+            <button class="admin-btn admin-btn-primary" onclick="adminPublishAnnouncement()">📢 Publikasikan</button>
           </div>
         </div>
 
-        <div class="admin-form-group">
-          <label>Teks Pengumuman</label>
-          <textarea id="annTextInput" placeholder="Contoh: Selamat! Penukaran hadiah dibuka hari ini pukul 10.00 - 17.00 WIB. Silakan datang ke toko dengan membawa screenshot voucher." style="min-height:100px;" oninput="updateAnnPreview()"></textarea>
-        </div>
-
-        <div class="ann-preview-label">Preview Tampilan</div>
-        <div class="ann-preview" id="annPreview">Ketik teks di atas untuk melihat preview...</div>
-
-        <div class="ann-status" id="annStatus">
-          <div class="ann-status-dot" id="annStatusDot"></div>
-          <span id="annStatusText">Tidak ada pengumuman aktif</span>
-        </div>
-
-        <div class="admin-btn-group" style="margin-top:16px;">
-          <button class="admin-btn admin-btn-primary" onclick="adminPublishAnnouncement()">📢 Publikasikan</button>
-          <button class="admin-btn admin-btn-danger" onclick="adminRemoveAnnouncement()">🗑️ Hapus Pengumuman</button>
+        <!-- SECTION 2: Pengumuman Aktif -->
+        <div class="ann-admin-section">
+          <div class="ann-admin-section-title">📋 Pengumuman Aktif</div>
+          <div class="ann-active-list" id="annActiveList">
+            <div class="ann-empty-list">Belum ada pengumuman aktif</div>
+          </div>
+          <div style="margin-top:12px;">
+            <button class="admin-btn admin-btn-danger" onclick="adminClearAllAnnouncements()" style="font-size:12px;">🗑️ Hapus Semua</button>
+          </div>
         </div>
 
       </div>
@@ -2687,117 +3042,229 @@ function playLoseSound() {
 }
 
 
-// ─── ANNOUNCEMENT ──────────────────────────────────────────
-let currentAnnIcon = '📢';
+// ─── ANNOUNCEMENT SYSTEM (UPGRADED) ───────────────────────
+const THEME_META = {
+  info:    { label: 'Info',       emoji: '📢', color: '#2E7D32' },
+  warning: { label: 'Peringatan', emoji: '⚠️',  color: '#F57C00' },
+  urgent:  { label: 'Urgent',     emoji: '🚨', color: '#C62828' },
+  success: { label: 'Selebrasi',  emoji: '🎉', color: '#1976D2' },
+  gold:    { label: 'Hadiah',     emoji: '🏆', color: '#7B5E37' },
+  purple:  { label: 'Event',      emoji: '🍀', color: '#6A1B9A' },
+};
+const ANN_TEMPLATES = {
+  klaim:       { icon:'🏪', title:'Info Klaim Hadiah', text:'Penukaran hadiah dibuka hari ini pukul 10.00–17.00 WIB. Datang ke toko dengan membawa screenshot voucher. Terima kasih! 🍀' },
+  habis:       { icon:'⚠️', title:'Perhatian', text:'Beberapa hadiah sudah tidak tersedia. Segera gunakan kode Anda sebelum kehabisan!' },
+  winner:      { icon:'🏆', title:'Selamat Para Pemenang!', text:'Terima kasih sudah berpartisipasi. Pemenang harap segera klaim hadiah melalui WhatsApp dalam 24 jam.' },
+  tutup:       { icon:'🕐', title:'Info Jam Operasional', text:'Klaim hadiah hanya bisa dilakukan pada jam 09.00–18.00 WIB. Di luar jam tersebut, silakan hubungi kami keesokan harinya.' },
+  selamat:     { icon:'🎉', title:'Selamat Beruntung!', text:'Selamat kepada semua peserta Lucky Draw St. Patrick\'s Day! Semoga keberuntungan selalu menyertai Anda. 🍀🌈' },
+  maintenance: { icon:'🔧', title:'Maintenance Sementara', text:'Sistem sedang dalam pemeliharaan. Mohon coba kembali beberapa saat lagi. Terima kasih atas kesabarannya.' },
+};
+
+let annTheme   = 'info';
+let annIcon    = '📢';
+let annOpts    = { pinned: false, marquee: false };
+let annList    = []; // array of announcement objects
+
+function selectAnnTheme(theme, el) {
+  annTheme = theme;
+  document.querySelectorAll('.ann-theme-swatch').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  // Auto set icon sesuai tema
+  const meta = THEME_META[theme];
+  if (meta) { annIcon = meta.emoji; _syncIconButtons(); }
+  updateAnnPreview();
+}
 
 function selectAnnIcon(icon, btn) {
-  currentAnnIcon = icon;
-  document.querySelectorAll('.ann-type-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
+  annIcon = icon;
+  _syncIconButtons();
+  updateAnnPreview();
+}
+
+function _syncIconButtons() {
+  document.querySelectorAll('#annIconRow .ann-type-btn').forEach(b => {
+    b.classList.toggle('selected', b.textContent.trim() === annIcon);
+  });
+}
+
+function toggleAnnOpt(opt) {
+  annOpts[opt] = !annOpts[opt];
+  const el = document.getElementById('opt-' + opt);
+  if (el) el.classList.toggle('on', annOpts[opt]);
+  updateAnnPreview();
+}
+
+function updateCharCount() {
+  const len = (document.getElementById('annTextInput')?.value || '').length;
+  const el  = document.getElementById('annCharCounter');
+  if (!el) return;
+  el.textContent = len + ' / 300';
+  el.classList.toggle('warn', len > 250);
+}
+
+function applyTemplate(key) {
+  const tpl = ANN_TEMPLATES[key];
+  if (!tpl) return;
+  document.getElementById('annTitleInput').value = tpl.title;
+  document.getElementById('annTextInput').value  = tpl.text;
+  annIcon = tpl.icon;
+  _syncIconButtons();
+  updateCharCount();
   updateAnnPreview();
 }
 
 function updateAnnPreview() {
-  const text = document.getElementById('annTextInput').value.trim();
-  const prev  = document.getElementById('annPreview');
-  prev.textContent = text
-    ? currentAnnIcon + '  ' + text
-    : 'Ketik teks di atas untuk melihat preview...';
-}
+  const title = document.getElementById('annTitleInput')?.value?.trim() || '';
+  const text  = document.getElementById('annTextInput')?.value?.trim()  || '';
+  const body  = document.getElementById('annPreviewBody');
+  if (!body) return;
 
-// Muat pengumuman dari server (API utama)
-// Tidak lagi bergantung pada localStorage
-async function loadAnnouncement() {
-  try {
-    const data = await apiCall({ action: 'get_announcement' });
-    if (data.success && data.text && data.text.trim()) {
-      showAnnouncementBar(data.icon || '📢', data.text);
-      localStorage.removeItem('luckydraw_announcement');
-    }
-  } catch(e) {
-    console.warn('Gagal ambil announcement dari server:', e);
+  if (!text) {
+    body.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-lt);font-size:12px;">Ketik teks pengumuman untuk melihat preview</div>`;
+    return;
   }
+  body.innerHTML = _buildAnnHTML({ id:'prev', theme: annTheme, icon: annIcon, title, text, pinned: annOpts.pinned, marquee: annOpts.marquee }, false);
 }
 
-function showAnnouncementBar(icon, text) {
-  const bar  = document.getElementById('announcementBar');
-  const icEl = document.getElementById('announcementIcon');
-  const txEl = document.getElementById('announcementText');
-  if (!bar) return;
-  icEl.textContent = icon;
-  txEl.textContent = text;
-  bar.classList.add('show');
+function _buildAnnHTML(ann, closeable = true) {
+  const meta    = THEME_META[ann.theme] || THEME_META.info;
+  const longText = ann.text.length > 80;
+  const useMarquee = ann.marquee && longText;
+  const textHTML = useMarquee
+    ? `<div class="ann-marquee-wrap"><div class="ann-marquee-inner">${ann.text}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${ann.text}</div></div>`
+    : `<div class="ann-text-line">${ann.text}</div>`;
+
+  return `
+    <div class="announcement-bar theme-${ann.theme}${ann.pinned ? ' pinned' : ''}" id="ann-${ann.id}">
+      <div class="ann-type-tag">${meta.label}</div>
+      <div class="ann-inner">
+        <div class="ann-icon-wrap">${ann.icon}</div>
+        <div class="ann-body">
+          ${ann.title ? `<div class="ann-title-line">${ann.title}</div>` : ''}
+          ${textHTML}
+          <div class="ann-meta">
+            <span class="ann-time">${ann.time || ''}</span>
+            ${ann.pinned ? '<span class="ann-pinned-badge">📌 Pinned</span>' : ''}
+          </div>
+        </div>
+      </div>
+      ${closeable && !ann.pinned ? `<button class="ann-close" onclick="dismissAnnouncement('${ann.id}')" title="Tutup">✕</button>` : ''}
+    </div>`;
 }
 
-function dismissAnnouncement() {
-  document.getElementById('announcementBar').classList.remove('show');
+function dismissAnnouncement(id) {
+  const el = document.getElementById('ann-' + id);
+  if (!el) return;
+  el.classList.add('dismissing');
+  setTimeout(() => el.remove(), 320);
 }
 
-// Admin: update preview status saat tab dibuka — ambil dari server
-async function loadAnnouncementAdminStatus() {
-  const dot = document.getElementById('annStatusDot');
-  const txt = document.getElementById('annStatusText');
-  if (!dot || !txt) return;
+// Render semua announcement ke stack
+function renderAnnStack() {
+  const stack = document.getElementById('annStack');
+  if (!stack) return;
+  if (annList.length === 0) { stack.innerHTML = ''; return; }
+  stack.innerHTML = annList.map(a => _buildAnnHTML(a, true)).join('');
+}
 
-  try {
-    const data = await apiCall({ action: 'get_announcement' });
-    if (data.success && data.text && data.text.trim()) {
-      dot.classList.add('active');
-      txt.textContent = `Aktif: "${data.text.slice(0, 60)}${data.text.length > 60 ? '...' : ''}"`;
-      document.getElementById('annTextInput').value = data.text;
-      currentAnnIcon = data.icon || '📢';
-      document.querySelectorAll('.ann-type-btn').forEach(b => {
-        b.classList.toggle('selected', b.textContent.startsWith(currentAnnIcon));
-      });
-      updateAnnPreview();
-      return;
-    }
-  } catch(e) {
-    console.warn('Gagal ambil status announcement:', e);
+// Render daftar aktif di admin
+function renderAnnActiveList() {
+  const el = document.getElementById('annActiveList');
+  if (!el) return;
+  if (annList.length === 0) {
+    el.innerHTML = '<div class="ann-empty-list">Belum ada pengumuman aktif</div>';
+    return;
   }
+  el.innerHTML = annList.map(a => {
+    const meta = THEME_META[a.theme] || THEME_META.info;
+    return `
+      <div class="ann-active-item">
+        <div class="ann-active-dot"></div>
+        <div class="ann-active-preview">${a.icon} ${a.title ? a.title + ': ' : ''}${a.text}</div>
+        <span class="ann-active-theme-badge" style="background:${meta.color}">${meta.label}</span>
+        <button class="ann-active-del" onclick="adminDeleteAnnouncement('${a.id}')">✕</button>
+      </div>`;
+  }).join('');
+}
 
-  dot.classList.remove('active');
-  txt.textContent = 'Tidak ada pengumuman aktif';
+// Simpan ke localStorage
+function _saveAnnList() {
+  localStorage.setItem('luckydraw_announcements', JSON.stringify(annList));
+}
+
+// Load dari localStorage
+function loadAnnouncement() {
+  try {
+    const raw = localStorage.getItem('luckydraw_announcements');
+    if (raw) annList = JSON.parse(raw);
+  } catch(e) { annList = []; }
+  renderAnnStack();
+}
+
+function loadAnnouncementAdminStatus() {
+  try {
+    const raw = localStorage.getItem('luckydraw_announcements');
+    if (raw) annList = JSON.parse(raw);
+  } catch(e) { annList = []; }
+  renderAnnActiveList();
+  updateAnnPreview();
 }
 
 async function adminPublishAnnouncement() {
-  const text = document.getElementById('annTextInput').value.trim();
+  const title  = document.getElementById('annTitleInput').value.trim();
+  const text   = document.getElementById('annTextInput').value.trim();
   if (!text) { showAdminAlert('⚠️ Isi teks pengumuman terlebih dahulu', 'error'); return; }
 
-  showAdminAlert('⏳ Menyimpan pengumuman ke server...', 'success');
+  const now = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+  const ann = {
+    id:      Date.now().toString(36),
+    theme:   annTheme,
+    icon:    annIcon,
+    title,
+    text,
+    pinned:  annOpts.pinned,
+    marquee: annOpts.marquee,
+    time:    now,
+  };
 
-  try {
-    const result = await apiCall({ action: 'set_announcement', icon: currentAnnIcon, text });
-    if (!result.success) throw new Error(result.error || 'Gagal simpan');
+  annList.unshift(ann); // taruh di atas
+  _saveAnnList();
+  renderAnnStack();
+  renderAnnActiveList();
 
-    localStorage.removeItem('luckydraw_announcement');
-    showAnnouncementBar(currentAnnIcon, text);
-    await loadAnnouncementAdminStatus();
-    showAdminAlert('✅ Pengumuman berhasil dipublikasikan ke semua pengguna!', 'success');
-  } catch(e) {
-    showAdminAlert('❌ Gagal menyimpan ke server: ' + e.message, 'error');
-  }
+  // Reset form
+  document.getElementById('annTitleInput').value = '';
+  document.getElementById('annTextInput').value  = '';
+  updateCharCount();
+  updateAnnPreview();
+
+  showAdminAlert('✅ Pengumuman berhasil dipublikasikan!', 'success');
+
+  // Kirim ke API juga (opsional)
+  try { await apiCall({ action: 'set_announcement', icon: annIcon, text, title, theme: annTheme }); } catch(e) {}
 }
 
-async function adminRemoveAnnouncement() {
-  if (!confirm('Hapus pengumuman yang sedang aktif?')) return;
-
-  showAdminAlert('⏳ Menghapus pengumuman...', 'success');
-
-  try {
-    const result = await apiCall({ action: 'remove_announcement' });
-    if (!result.success) throw new Error(result.error || 'Gagal hapus');
-
-    localStorage.removeItem('luckydraw_announcement');
-    dismissAnnouncement();
-    document.getElementById('annTextInput').value = '';
-    updateAnnPreview();
-    await loadAnnouncementAdminStatus();
-    showAdminAlert('✅ Pengumuman berhasil dihapus!', 'success');
-  } catch(e) {
-    showAdminAlert('❌ Gagal menghapus dari server: ' + e.message, 'error');
-  }
+function adminDeleteAnnouncement(id) {
+  annList = annList.filter(a => a.id !== id);
+  _saveAnnList();
+  dismissAnnouncement(id);
+  renderAnnActiveList();
 }
+
+async function adminClearAllAnnouncements() {
+  if (!confirm('Hapus semua pengumuman?')) return;
+  annList = [];
+  _saveAnnList();
+  renderAnnStack();
+  renderAnnActiveList();
+  showAdminAlert('✅ Semua pengumuman dihapus', 'success');
+  try { await apiCall({ action: 'remove_announcement' }); } catch(e) {}
+}
+
+// Alias lama agar tidak crash jika masih ada pemanggilan
+function adminRemoveAnnouncement() { adminClearAllAnnouncements(); }
+
+
 
 // ─── LIVE WINNER FEED ──────────────────────────────────────
 function showWinnerToast(nama, prize) {
