@@ -716,10 +716,7 @@ h1 span {
 .cd-lbl { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lt); }
 .cd-sep { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin-bottom: 8px; }
 
-.used-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
-.used-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lt); margin-bottom: 8px; }
-.used-chips { display: flex; flex-wrap: wrap; gap: 6px; max-height: 80px; overflow-y: auto; }
-.used-chip { font-size: 10px; font-family: monospace; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(200,50,50,0.06); color: #C03030; border: 1px solid rgba(200,50,50,0.15); text-decoration: line-through; }
+
 
 .watermark { position: fixed; inset: 0; pointer-events: none; z-index: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .watermark-text { font-family: 'Cinzel', serif; font-size: clamp(3rem,10vw,7rem); color: rgba(46,125,50,0.03); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; transform: rotate(-30deg); user-select: none; }
@@ -1992,10 +1989,6 @@ h1 span {
       <div class="status-dot2"></div>
       <span id="statusText">Masukkan 8 digit kode untuk memulai</span>
     </div>
-    <div class="used-section">
-      <div class="used-lbl">Kode terpakai (<span id="usedCount">0</span>)</div>
-      <div class="used-chips" id="usedList"><span style="font-size:11px;color:var(--text-lt)">Belum ada</span></div>
-    </div>
   </div>
 
   <div class="game-section">
@@ -2269,10 +2262,10 @@ const EVENT_END   = new Date('2026-06-07T23:59:59');
 const PRIZES = [
   // Crocs: weight 0 = tidak pernah bisa dimenangkan, tapi tetap tampil sebagai display
   { label: "Crocs Classic Clog",  emoji: "👟", weight: 0,  color: "#C9A84C" },
-  { label: "DANA KAGET 30RB",     emoji: "💰", weight: 3,  color: "#2D6A4F" },
-  { label: "Diskon 35RB",         emoji: "🎁", weight: 23, color: "#40916C" },
-  { label: "Diskon 20RB",         emoji: "🏷️", weight: 30, color: "#74C69D" },
-  { label: "Coba Lagi",           emoji: "🍀", weight: 60, color: "#8AAA97" },
+  { label: "DANA KAGET 40RB",     emoji: "💰", weight: 3,  color: "#2D6A4F" },
+  { label: "Diskon 35RB",         emoji: "🎁", weight: 40, color: "#40916C" },
+  { label: "DANA KAGET 25RB",         emoji: "💶", weight: 4, color: "#74C69D" },
+  { label: "Coba Lagi",           emoji: "🍀", weight: 50, color: "#8AAA97" },
 ];
 // TOTAL_W hanya menghitung prize dengan weight > 0
 const TOTAL_W = PRIZES.reduce((s,p) => s + p.weight, 0);
@@ -2331,7 +2324,6 @@ async function initCodes() {
   setConnStatus('ok', '✅ Server Online');
   document.getElementById('checkingBar').style.background = 'var(--green)';
   setTimeout(proceedToSnk, 800);
-  renderUsedCodes();
 }
 
 function setCheckStatus(type, text) {
@@ -2780,7 +2772,6 @@ function showResult(prize) {
 
   apiCall({ action:'use', code:currentCode, hadiah:prize.label });
   usedCodes.add(currentCode); validCodes.delete(currentCode); markSession(currentCode);
-  renderUsedCodes();
   setConnStatus('ok', `✅ Server Online Verified`);
 
   if (!isLose) {
@@ -2831,14 +2822,6 @@ async function submitNama() {
     `Saya sudah screenshot voucher. Mohon bantu proses klaim hadiah saya ya!`
   );
   document.getElementById('waBtn').href = `https://wa.me/${WA_NUMBER}?text=${pesan}`;
-}
-
-function renderUsedCodes() {
-  const el = document.getElementById('usedList');
-  document.getElementById('usedCount').textContent = usedCodes.size;
-  el.innerHTML = usedCodes.size === 0
-    ? '<span style="font-size:11px;color:var(--text-lt)">Belum ada</span>'
-    : [...usedCodes].map(c=>`<div class="used-chip">${c}</div>`).join('');
 }
 
 function buildPrizeList() {
@@ -3510,7 +3493,6 @@ function shake(el) { el.animate([{transform:'translateX(-5px)'},{transform:'tran
 
 buildBoxes();
 buildPrizeList();
-renderUsedCodes();
 initCodes();
 loadLeaderboard();
 loadAnnouncement();
